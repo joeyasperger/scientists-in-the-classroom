@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222063804) do
+ActiveRecord::Schema.define(version: 20160224070620) do
+
+  create_table "matches", force: :cascade do |t|
+    t.integer  "scientist_id"
+    t.integer  "teacher_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "matches", ["scientist_id"], name: "index_matches_on_scientist_id"
+  add_index "matches", ["teacher_id"], name: "index_matches_on_teacher_id"
 
   create_table "scientists", force: :cascade do |t|
     t.string   "name"
