@@ -16,7 +16,7 @@ class ScientistController < ApplicationController
 
   def create
 
-    scientist = Scientist.new(params.permit(:name, :city, :state, :email, :phone, :education, :affiliation,
+    scientist = Scientist.new(params.permit(:name, :city, :state, :zip_code, :email, :phone, :education, :affiliation,
       :specialization, :experience, :goals, :availability, :less_than_30, :link, :read_expectations))
 
     if params[:communication_method] == "other"

@@ -15,7 +15,7 @@ class TeacherController < ApplicationController
   end
 
   def create
-    teacher = Teacher.new(params.permit(:name, :city, :state, :email, :phone, :school,
+    teacher = Teacher.new(params.permit(:name, :city, :state, :zip_code, :email, :phone, :school,
       :grade, :topics, :class_times, :topics_to_cover, :benefits, :requirements))
 
     if params[:communication_method] == "other"
