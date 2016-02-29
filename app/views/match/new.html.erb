@@ -5,14 +5,40 @@
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-10">
-          <div class="panel panel-default">
+          <div class="panel panel-info teacher" id="teacher_<%= i %>" onclick="expandTeacher(<%= i %>)" style="cursor:pointer">
             <div class="panel-heading">
               <h3 class="panel-title">Teacher Name - School</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-6">Location: San Jose</div>
-                <div class="col-sm-6">Topics: Evolution</div>
+                <div class="col-sm-6"><strong>Location</strong>: San Jose</div>
+                <div class="col-sm-6"><strong>Topic wanted</strong>: Evolution</div>
+              </div>
+              <div class="expanded-info" style="display:none">
+                <div class="row">
+                  <div class="col-sm-12"><strong>Email</strong>: something@gmail.com</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Phone</strong>: 666-666-6666</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Education</strong>: PhD</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Occupation</strong>: Lecturer</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Grade levels</strong>: 4th and 5th</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Topics taught</strong>: Geology, animal science</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Wants scientist to cover</strong>: Climate Change</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Details on what to cover</strong>: More details on what the teacher wants the scientist to cover. This could be a longer answer</div>
+                </div>
               </div>
             </div>
           </div>
@@ -24,14 +50,27 @@
       <% for i in 0...7 %>
       <div class="row">
         <div class="col-md-10">
-          <div class="panel panel-default">
+          <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">Scientist Name - Institution</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-6">Location: San Jose</div>
-                <div class="col-sm-6">Topics: Evolution</div>
+                <div class="col-sm-6"><strong>Location</strong>: San Jose</div>
+                <div class="col-sm-6"><strong>Topics</strong>: Evolution</div>
+              </div>
+              <div class="expanded-info" style="display:none">
+                <div class="row">
+                  <div class="col-sm-6">Email: something@gmail.com</div>
+                  <div class="col-sm-6">Phone: 666-666-6666</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">Education: PhD</div>
+                  <div class="col-sm-6">Occupation: Lecturer</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">Specialization: This is a longer answer where the scientist says something about their specialzation. more words more words more words more words more words more words more words more words</div>
+                </div>
               </div>
             </div>
           </div>
@@ -42,3 +81,14 @@
     </div>
   </div>
 </div>
+<script>
+function expandTeacher(id){
+  if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
+    $('.teacher .expanded-info').css('display', 'none')
+    $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
+  }
+  else{
+    $('#teacher_' + id + ' .expanded-info').css('display', 'none')
+  }
+}
+</script>
