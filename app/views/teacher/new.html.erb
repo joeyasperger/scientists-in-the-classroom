@@ -10,10 +10,10 @@
   <p>Phone Number: <input type="text" name="phone"></p>
 
   <h3>2. You will be in communication with your scientist consistently throughout the semester. What is your preferred method of communication?</h3>
-  <p><input type="radio" name="communication_method"> Phone</p>
-  <p><input type="radio" name="communication_method"> Email</p>
-  <p><input type="radio" name="communication_method"> Other (please specify)</p>
-  <p><input type="text" name="communication_method"></p>
+  <p><input type="radio" name="communication_method" value="phone"> Phone</p>
+  <p><input type="radio" name="communication_method" value="email"> Email</p>
+  <p><input type="radio" name="communication_method" value="other"> Other (please specify)</p>
+  <p><input type="text" name="communication_method_other"></p>
 
   <h3>3. What grade level(s) do you teach?</h3>
   <p><input type="text" name="grade"></p>
@@ -25,12 +25,12 @@
   <p><input type="text" name="class_times"></p>
 
   <h3>6. What topic(s) do you want the scientist to cover in your class?</h3>
-  <p><input type="radio" name="topics_to_cover"> Climate Change</p>
-  <p><input type="radio" name="topics_to_cover"> Evolution</p>
-  <p><input type="radio" name="topics_to_cover"> Both Climate Change and Evolution</p>
+  <p><input type="radio" name="topics" value="climate_change"> Climate Change</p>
+  <p><input type="radio" name="topics" value="evolution"> Evolution</p>
+  <p><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</p>
 
   <h3>7. Please provide details on what you want the scientist to cover in your class.</h3>
-  <p><input type="text" name="topics_to_cover_details"></p>
+  <p><input type="text" name="topics_to_cover"></p>
 
   <h3>8. How do you see you and your students benefiting from the Scientists in the Classroom program?</h3>
   <p><input type="text" name="benefits"></p>
@@ -39,10 +39,10 @@
   <p><input type="text" name="requirements"></p>
 
   <h3>10. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h3>
-  <p><input type="radio" name="expectations"> I have read the expectations for the program and am committing to my matched scientist visiting my class twice during the semester!</p>
+  <p><input type="checkbox" name="read_expectations"> I have read the expectations for the program and am committing to my matched scientist visiting my class twice during the semester!</p>
 
   <h3>11. Have you talked to your principal and received approval for the Scientists in the Classroom program?</h3>
-  <p><input type="radio" name="expectations"> Yes, I have already talked to and received approval from my principal about the Scientist in the Classroom program!</p>
+  <p><input type="checkbox" name="approved"> Yes, I have already talked to and received approval from my principal about the Scientist in the Classroom program!</p>
 
   <p><input type="submit" value="Submit"></p>
 

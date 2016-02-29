@@ -1,4 +1,4 @@
-<form action="/teachers" method="post">
+<form action="/scientists" method="post">
   <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
   <h3>1. Contact Information</h3>
   <p>Name (First and Last): <input type="text" name="name"></p>
@@ -9,30 +9,30 @@
   <p>Phone Number: <input type="text" name="phone"></p>
 
   <h3>2. You will be interacting with the teacher consistently throughout the semester. What is your preferred method of communication?</h3>
-  <p><input type="radio" name="communication_method"> Phone</p>
-  <p><input type="radio" name="communication_method"> Email</p>
-  <p><input type="radio" name="communication_method"> Other (please specify)</p>
-  <p><input type="text" name="communication_method"></p>
+  <p><input type="radio" name="communication_method" value="phone"> Phone</p>
+  <p><input type="radio" name="communication_method" value="email"> Email</p>
+  <p><input type="radio" name="communication_method" value="other"> Other (please specify)</p>
+  <p><input type="text" name="communication_method_other"></p>
 
   <h3>3. What is your highest level of education?</h3>
-  <p><input type="radio" name="education"> Bachelor's Degree</p>
-  <p><input type="radio" name="education"> Graduate Degree</p>
-  <p><input type="radio" name="education"> PhD</p>
+  <p><input type="radio" name="education" value="Bachelor's Degree"> Bachelor's Degree</p>
+  <p><input type="radio" name="education" value="Graduate Degree"> Graduate Degree</p>
+  <p><input type="radio" name="education" value="PhD"> PhD</p>
 
   <h3>4. What is your occupation?</h3>
-  <p><input type="radio" name="occupation"> Graduate Student</p>
-  <p><input type="radio" name="occupation"> Post-doc</p>
-  <p><input type="radio" name="occupation"> Lecturer/Professor/Instructor</p>
-  <p><input type="radio" name="occupation"> Other (please specify)</p>
-  <p><input type="text" name="occupation"></p>
+  <p><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</p>
+  <p><input type="radio" name="occupation" value="Post-doc"> Post-doc</p>
+  <p><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</p>
+  <p><input type="radio" name="occupation" value="other"> Other (please specify)</p>
+  <p><input type="text" name="occupation_other"></p>
 
   <h3>5. What school or company are you affiliated with?</h3>
   <p><input type="text" name="affiliation"></p>
 
   <h3>6. Can you talk about evolution, climate change, or both?</h3>
-  <p><input type="radio" name="topics_to_cover"> Climate Change</p>
-  <p><input type="radio" name="topics_to_cover"> Evolution</p>
-  <p><input type="radio" name="topics_to_cover"> Both Climate Change and Evolution</p>
+  <p><input type="radio" name="topics" value="climate_change"> Climate Change</p>
+  <p><input type="radio" name="topics" value="evolution"> Evolution</p>
+  <p><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</p>
 
   <h3>7. What is your specialization? How does it relate to climate change or evolution?</h3>
   <p><input type="text" name="specialization"></p>
@@ -47,17 +47,17 @@
   <p><input type="text" name="availability"></p>
 
   <h3>11. This program requires that you visit the class you are matched with twice during the semester, possibly for multiple periods during the day. Will you be able to commit the time to do this?</h3>
-  <p><input type="radio" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</p>
+  <p><input type="checkbox" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</p>
 
   <h3>12. Sometimes the class you are matched with is not right in or near urban or University centers. Would you be willing to travel up to an hour to visit a classroom? (Keep in mind this would be only twice during the semester).</h3>
-  <p><input type="radio" name="less_than_30"> Yes, that is not a problem.</p>
-  <p><input type="radio" name="less_than_30"> No, let's keep the class within 30 minutes of where I am.</p>
+  <p><input type="radio" name="less_than_30" value="yes"> Yes, that is not a problem.</p>
+  <p><input type="radio" name="less_than_30" value="no"> No, let's keep the class within 30 minutes of where I am.</p>
 
   <h3>13. If available, please include a link to a video of a talk you have given.</h3>
   <p><input type="text" name="link"></p>
 
   <h3>14. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h3>
-  <p><input type="radio" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</p>
+  <p><input type="checkbox" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</p>
 
   <p><input type="submit" value="Submit"></p>
 
