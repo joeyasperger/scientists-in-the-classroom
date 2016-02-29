@@ -3,7 +3,13 @@
   <h3>1. Contact Information</h3>
   <p>Name (First and Last): <input type="text" name="name"></p>
   <p>City/Town: <input type="text" name="city"></p>
-  <p>State/Province: <input type="text" name="state"></p> <!-- TODO dropdown? -->
+  <p>State/Province:
+    <select name="state">
+      <% @states.each do |state| %>
+        <option value="<%= state %>"><%= state %></option>
+      <% end %>
+    </select>
+  </p>
   <p>ZIP/Postal Code: <input type="text" name="zip"></p>
   <p>Email Address: <input type="email" name="email"></p>
   <p>Phone Number: <input type="text" name="phone"></p>
@@ -23,7 +29,7 @@
   <p><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</p>
   <p><input type="radio" name="occupation" value="Post-doc"> Post-doc</p>
   <p><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</p>
-  <p><input type="radio" name="occupation" value="other"> Other (please specify)</p>
+  <p><input type="radio" name="occupation" value="otheri"> Other (please specify)</p>
   <p><input type="text" name="occupation_other"></p>
 
   <h3>5. What school or company are you affiliated with?</h3>
