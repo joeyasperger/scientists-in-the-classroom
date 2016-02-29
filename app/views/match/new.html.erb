@@ -1,5 +1,11 @@
 <div class="container">
   <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-5 text-center"><h3>Teachers</h3></div>
+    <div class="col-xs-5 text-center"><h3>Scientists</h3></div>
+    <div class="col-xs-1"></div>
+  </div>
+  <div class="row">
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
       <% for i in 0...7 %>
       <div class="row">
@@ -11,8 +17,13 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-6"><strong>Location</strong>: San Jose</div>
-                <div class="col-sm-6"><strong>Topic wanted</strong>: Evolution</div>
+                <div class="col-sm-12"><strong>Location</strong>: San Jose, CA 94305</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Grade levels</strong>: 4th and 5th</div>
               </div>
               <div class="expanded-info" style="display:none">
                 <div class="row">
@@ -22,13 +33,13 @@
                   <div class="col-sm-12"><strong>Phone</strong>: 666-666-6666</div>
                 </div>
                 <div class="row">
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: email</div>
+                </div>
+                <div class="row">
                   <div class="col-sm-12"><strong>Education</strong>: PhD</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12"><strong>Occupation</strong>: Lecturer</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Grade levels</strong>: 4th and 5th</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12"><strong>Topics taught</strong>: Geology, animal science</div>
@@ -38,6 +49,12 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12"><strong>Details on what to cover</strong>: More details on what the teacher wants the scientist to cover. This could be a longer answer</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>How students will benefit</strong>: Something about how the students will benefit from this scientist</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>School Requirements</strong>: Background check or something</div>
                 </div>
               </div>
             </div>
@@ -50,26 +67,47 @@
       <% for i in 0...7 %>
       <div class="row">
         <div class="col-md-10">
-          <div class="panel panel-info">
+          <div class="panel panel-info scientist" id="scientist_<%= i %>" onclick="expandScientist(<%= i %>)" style="cursor:pointer">
             <div class="panel-heading">
               <h3 class="panel-title">Scientist Name - Institution</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-6"><strong>Location</strong>: San Jose</div>
-                <div class="col-sm-6"><strong>Topics</strong>: Evolution</div>
+                <div class="col-sm-12"><strong>Location</strong>: San Jose, CA 94306</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Occupation</strong>: Lecturer</div>
               </div>
               <div class="expanded-info" style="display:none">
                 <div class="row">
-                  <div class="col-sm-6">Email: something@gmail.com</div>
-                  <div class="col-sm-6">Phone: 666-666-6666</div>
+                  <div class="col-sm-12"><strong>Email</strong>: something@gmail.com</div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-6">Education: PhD</div>
-                  <div class="col-sm-6">Occupation: Lecturer</div>
+                  <div class="col-sm-12"><strong>Phone</strong>: 666-666-6666</div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12">Specialization: This is a longer answer where the scientist says something about their specialzation. more words more words more words more words more words more words more words more words</div>
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: email</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Education</strong>: Master's</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Specialization</strong>: Stuff about scientist's specialization and it's relation to climate change or evolution</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Classroom experience</strong>: Any experience the scientist has in a classroom setting</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Hopes to gain</strong>: What the scientist hopes to gain from this experience</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Overall availability</strong>: When the scientist is available</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Link to talk</strong>: <a>youtube.com</a></div>
                 </div>
               </div>
             </div>
@@ -89,6 +127,16 @@ function expandTeacher(id){
   }
   else{
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
+  }
+}
+
+function expandScientist(id){
+  if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){
+    $('.scientist .expanded-info').css('display', 'none')
+    $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')
+  }
+  else{
+    $('#scientist_' + id + ' .expanded-info').css('display', 'none')
   }
 }
 </script>
