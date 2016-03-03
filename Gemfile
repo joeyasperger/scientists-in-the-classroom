@@ -25,6 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # I added
 gem 'devise'
+#gem 'geokit-rails'
+gem 'geokit-rails', github: 'geokit/geokit-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

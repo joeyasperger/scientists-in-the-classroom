@@ -3,6 +3,8 @@
   	<h1> Homepage! </h1>
 
   	<h3> Your email is <%= @curr_admin.email %></h3>
+  	<%= link_to('Test', controller: "teachers", action: "test") %>
+
   <%= link_to('Logout', destroy_admin_session_path, :method => :delete) %>        
   </li>
 <% else %>
