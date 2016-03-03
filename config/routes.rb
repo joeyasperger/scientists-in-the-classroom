@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
+  devise_for :admins
+  root to: "admin#home"
+
   get 'match' => 'match#new'
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
   get 'teachers/new' => 'teacher#new'
   post 'teachers' => 'teacher#create'
