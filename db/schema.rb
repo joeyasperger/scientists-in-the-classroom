@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224070620) do
+ActiveRecord::Schema.define(version: 20160229044758) do
 
   create_table "matches", force: :cascade do |t|
     t.integer  "scientist_id"
@@ -45,6 +45,9 @@ ActiveRecord::Schema.define(version: 20160224070620) do
     t.boolean  "read_expectations"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "zip_code"
+    t.decimal  "lat"
+    t.decimal  "lng"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -67,6 +70,9 @@ ActiveRecord::Schema.define(version: 20160224070620) do
     t.boolean  "approved"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "zip_code"
+    t.decimal  "lat"
+    t.decimal  "lng"
   end
 
 end

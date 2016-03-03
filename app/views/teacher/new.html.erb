@@ -1,0 +1,55 @@
+<form action="/teachers" method="post">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <h3>1. Contact Information</h3>
+  <p>Name (First and Last): <input type="text" name="name"></p>
+  <p>School Name: <input type="text" name="school"></p>
+  <p>City/Town: <input type="text" name="city"></p>
+  <p>State/Province:
+    <select name="state">
+      <% @states.each do |state| %>
+        <option value="<%= state %>"><%= state %></option>
+      <% end %>
+    </select>
+  </p>
+  <p>ZIP/Postal Code: <input type="text" name="zip_code"></p>
+  <p>Email Address: <input type="email" name="email"></p>
+  <p>Phone Number: <input type="text" name="phone"></p>
+
+  <h3>2. You will be in communication with your scientist consistently throughout the semester. What is your preferred method of communication?</h3>
+  <p><input type="radio" name="communication_method" value="phone"> Phone</p>
+  <p><input type="radio" name="communication_method" value="email"> Email</p>
+  <p><input type="radio" name="communication_method" value="other"> Other (please specify)</p>
+  <p><input type="text" name="communication_method_other"></p>
+
+  <h3>3. What grade level(s) do you teach?</h3>
+  <p><input type="text" name="grade"></p>
+
+  <h3>4. What topic(s) do you teach?</h3>
+  <p><input type="text" name="topics"></p>
+
+  <h3>5. What times do the classes that you would like to participate in the Scientists in the Classroom program meet?</h3>
+  <p><input type="text" name="class_times"></p>
+
+  <h3>6. What topic(s) do you want the scientist to cover in your class?</h3>
+  <p><input type="radio" name="topics" value="climate_change"> Climate Change</p>
+  <p><input type="radio" name="topics" value="evolution"> Evolution</p>
+  <p><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</p>
+
+  <h3>7. Please provide details on what you want the scientist to cover in your class.</h3>
+  <p><input type="text" name="topics_to_cover"></p>
+
+  <h3>8. How do you see you and your students benefiting from the Scientists in the Classroom program?</h3>
+  <p><input type="text" name="benefits"></p>
+
+  <h3>9. Does your school have any requirements, such as background checks, for guests to complete before they begin to work with your class? Please list them if so. This is important for the scientist to know and complete before being able to come into the classroom (Scientists are only vetted for their scientific background, but NCSE can help with all of the appropriate procedures if your school has rules for allowing guests).</h3>
+  <p><input type="text" name="requirements"></p>
+
+  <h3>10. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h3>
+  <p><input type="checkbox" name="read_expectations"> I have read the expectations for the program and am committing to my matched scientist visiting my class twice during the semester!</p>
+
+  <h3>11. Have you talked to your principal and received approval for the Scientists in the Classroom program?</h3>
+  <p><input type="checkbox" name="approved"> Yes, I have already talked to and received approval from my principal about the Scientist in the Classroom program!</p>
+
+  <p><input type="submit" value="Submit"></p>
+
+</form>
