@@ -1,0 +1,17 @@
+<h1> Test </h1>
+<% if @teacher == nil then %>
+	<h1> TEACHER DOESN'T EXIST </h1>
+<% else %>
+	<h2> Teacher Name: </h2>
+	<%= @teacher.name %>
+	<%= @teacher.lat %>
+	<%= @teacher.lng %>
+	<h2> Scientist Info </h2>
+	<%= @scientist.name %>
+	<%= @scientist.lat %>
+	<%= @scientist.lng %>
+	<h2> Location of scientist: </h2>
+	<%= @scientist_loc %>
+	<h2> Nearby Teacher </h2>
+	<%= @nearby_teacher.name %>
+<% end %>
