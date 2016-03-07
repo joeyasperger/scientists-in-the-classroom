@@ -7,54 +7,51 @@
   </div>
   <div class="row">
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
-      <% for i in 0...7 %>
+      <% @teachers.each do |teacher| %>
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-10">
-          <div class="panel panel-info teacher" id="teacher_<%= i %>" onclick="expandTeacher(<%= i %>)" style="cursor:pointer">
+          <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandTeacher(<%= teacher.id %>)" style="cursor:pointer">
             <div class="panel-heading">
-              <h3 class="panel-title">Teacher Name - School</h3>
+              <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-12"><strong>Location</strong>: San Jose, CA 94305</div>
+                <div class="col-sm-12"><strong>Location</strong>: <%= teacher.city %>, <%= teacher.state %> <%= teacher.zip_code %></div>
               </div>
               <div class="row">
-                <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
+                <% if teacher.evolution and teacher.climate_change %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
+                <% elsif teacher.evolution %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution</div>
+                <% elsif teacher.climate_change %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Climate Change</div>
+                <% end %>
               </div>
               <div class="row">
-                <div class="col-sm-12"><strong>Grade levels</strong>: 4th and 5th</div>
+                <div class="col-sm-12"><strong>Grade levels</strong>: <%= teacher.grade %></div>
               </div>
               <div class="expanded-info" style="display:none">
                 <div class="row">
-                  <div class="col-sm-12"><strong>Email</strong>: something@gmail.com</div>
+                  <div class="col-sm-12"><strong>Email</strong>: <%= teacher.email %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Phone</strong>: 666-666-6666</div>
+                  <div class="col-sm-12"><strong>Phone</strong>: <%= teacher.phone %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preffered Communication</strong>: email</div>
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= teacher.communication_method %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Education</strong>: PhD</div>
+                  <div class="col-sm-12"><strong>Topics taught</strong>: <%= teacher.topics %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Occupation</strong>: Lecturer</div>
+                  <div class="col-sm-12"><strong>Details on what to cover</strong>: <%= teacher.topics_to_cover %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Topics taught</strong>: Geology, animal science</div>
+                  <div class="col-sm-12"><strong>How students will benefit</strong>: <%= teacher.benefits %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Wants scientist to cover</strong>: Climate Change</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Details on what to cover</strong>: More details on what the teacher wants the scientist to cover. This could be a longer answer</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>How students will benefit</strong>: Something about how the students will benefit from this scientist</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>School Requirements</strong>: Background check or something</div>
+                  <div class="col-sm-12"><strong>School Requirements</strong>: <%= teacher.requirements %></div>
                 </div>
               </div>
             </div>
@@ -64,50 +61,56 @@
       <% end %>
     </div>
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
-      <% for i in 0...7 %>
+      <% @scientists.each do |scientist| %>
       <div class="row">
         <div class="col-md-10">
-          <div class="panel panel-info scientist" id="scientist_<%= i %>" onclick="expandScientist(<%= i %>)" style="cursor:pointer">
+          <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandScientist(<%= scientist.id %>)" style="cursor:pointer">
             <div class="panel-heading">
-              <h3 class="panel-title">Scientist Name - Institution</h3>
+              <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-sm-12"><strong>Location</strong>: San Jose, CA 94306</div>
+                <div class="col-sm-12"><strong>Location</strong>: <%= scientist.city %>, <%= scientist.state %> <%= scientist.zip_code %></div>
               </div>
               <div class="row">
-                <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
+                <% if scientist.evolution and scientist.climate_change %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution and Climate Change</div>
+                <% elsif scientist.evolution %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
+                <% elsif scientist.climate_change %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Climate Change</div>
+                <% end %>
               </div>
               <div class="row">
-                <div class="col-sm-12"><strong>Occupation</strong>: Lecturer</div>
+                <div class="col-sm-12"><strong>Occupation</strong>: <%= scientist.occupation %></div>
               </div>
               <div class="expanded-info" style="display:none">
                 <div class="row">
-                  <div class="col-sm-12"><strong>Email</strong>: something@gmail.com</div>
+                  <div class="col-sm-12"><strong>Email</strong>: <%= scientist.email %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Phone</strong>: 666-666-6666</div>
+                  <div class="col-sm-12"><strong>Phone</strong>: <%= scientist.phone %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preffered Communication</strong>: email</div>
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= scientist.communication_method %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Education</strong>: Master's</div>
+                  <div class="col-sm-12"><strong>Education</strong>: <%= scientist.education %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Specialization</strong>: Stuff about scientist's specialization and it's relation to climate change or evolution</div>
+                  <div class="col-sm-12"><strong>Specialization</strong>: <%= scientist.specialization %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Classroom experience</strong>: Any experience the scientist has in a classroom setting</div>
+                  <div class="col-sm-12"><strong>Classroom experience</strong>: <%= scientist.experience %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Hopes to gain</strong>: What the scientist hopes to gain from this experience</div>
+                  <div class="col-sm-12"><strong>Hopes to gain</strong>: <%= scientist.goals %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Overall availability</strong>: When the scientist is available</div>
+                  <div class="col-sm-12"><strong>Overall availability</strong>: <%= scientist.availability %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Link to talk</strong>: <a>youtube.com</a></div>
+                  <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
                 </div>
               </div>
             </div>
