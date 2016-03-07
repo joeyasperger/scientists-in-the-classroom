@@ -1,70 +1,197 @@
-<form action="/scientists" method="post">
-  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-  <h3>1. Contact Information</h3>
-  <p>Name (First and Last): <input type="text" name="name"></p>
-  <p>City/Town: <input type="text" name="city"></p>
-  <p>State/Province:
-    <select name="state">
-      <% @states.each do |state| %>
-        <option value="<%= state %>"><%= state %></option>
-      <% end %>
-    </select>
-  </p>
-  <p>ZIP/Postal Code: <input type="text" name="zip_code"></p>
-  <p>Email Address: <input type="email" name="email"></p>
-  <p>Phone Number: <input type="text" name="phone"></p>
+<style>
+  .indent {
+    padding-left:40px;
+  }
+  body {
+    padding-bottom:30px;
+  }
+  h4 {
+    margin-top:30px;
+  }
+</style>
+<div class="container">
+  <form action="/scientists" method="post" class="form-horizontal" role="form">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <h3>Scientist Application</h3>
+    <h4>1. Contact Information</h4>
+    <div class="form-group">
+      <label class="control-label col-md-2">Name (First and Last):</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">City/Town:</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="city">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">State/Province:</label>
+      <div class="col-md-4">
+        <select class="form-control" name="state">
+          <% @states.each do |state| %>
+            <option value="<%= state %>"><%= state %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">ZIP/Postal Code:</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="zip_code">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Email Address:</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Phone Number:</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="phone">
+      </div>
+    </div>
 
-  <h3>2. You will be interacting with the teacher consistently throughout the semester. What is your preferred method of communication?</h3>
-  <p><input type="radio" name="communication_method" value="phone"> Phone</p>
-  <p><input type="radio" name="communication_method" value="email"> Email</p>
-  <p><input type="radio" name="communication_method" value="other"> Other (please specify)</p>
-  <p><input type="text" name="communication_method_other"></p>
+    <h4>2. You will be interacting with the teacher consistently throughout the semester. What is your preferred method of communication?</h4>
+    <div class="radio indent">
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="communication_method" value="phone">Phone</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="communication_method" value="email">Email</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="communication_method" value="other">Other (please specify)</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="indent col-md-4">
+        <input type="text" class="form-control" name="communication_method_other">
+      </div>
+    </div>
 
-  <h3>3. What is your highest level of education?</h3>
-  <p><input type="radio" name="education" value="Bachelor's Degree"> Bachelor's Degree</p>
-  <p><input type="radio" name="education" value="Graduate Degree"> Graduate Degree</p>
-  <p><input type="radio" name="education" value="PhD"> PhD</p>
+    <h4>3. What is your highest level of education?</h4>
+    <div class="radio indent">
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="education" value="Bachelor's Degree">Bachelor's Degree</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="education" value="Graduate Degree">Graduate Degree</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="education" value="PhD">PhD</label>
+      </div>
+    </div>
 
-  <h3>4. What is your occupation?</h3>
-  <p><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</p>
-  <p><input type="radio" name="occupation" value="Post-doc"> Post-doc</p>
-  <p><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</p>
-  <p><input type="radio" name="occupation" value="otheri"> Other (please specify)</p>
-  <p><input type="text" name="occupation_other"></p>
+    <h4>4. What is your occupation?</h4>
+    <div class="radio indent">
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="occupation" value="Post-doc"> Post-doc</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="occupation" value="other"> Other (please specify)</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="indent col-md-4">
+        <input type="text" class="form-control" name="occupation_other">
+      </div>
+    </div>
 
-  <h3>5. What school or company are you affiliated with?</h3>
-  <p><input type="text" name="affiliation"></p>
+    <h4>5. What school or company are you affiliated with?</h4>
+    <div class="form-group">
+      <div class="indent col-md-4">
+        <input type="text" class="form-control" name="affiliation">
+      </div>
+    </div>
 
-  <h3>6. Can you talk about evolution, climate change, or both?</h3>
-  <p><input type="radio" name="topics" value="climate_change"> Climate Change</p>
-  <p><input type="radio" name="topics" value="evolution"> Evolution</p>
-  <p><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</p>
+    <h4>6. Can you talk about evolution, climate change, or both?</h4>
+    <div class="radio indent">
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="topics" value="climate_change"> Climate Change</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="topics" value="evolution"> Evolution</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</label>
+      </div>
+    </div>
 
-  <h3>7. What is your specialization? How does it relate to climate change or evolution?</h3>
-  <p><input type="text" name="specialization"></p>
+    <h4>7. What is your specialization? How does it relate to climate change or evolution?</h4>
+    <div class="form-group">
+      <div class="indent col-md-6">
+        <textarea class="form-control" rows="3" name="specialization"></textarea>
+      </div>
+    </div>
 
-  <h3>8. What experience do you have working in a classroom setting?</h3>
-  <p><input type="text" name="experience"></p>
+    <h4>8. What experience do you have working in a classroom setting?</h4>
+    <div class="form-group">
+      <div class="indent col-md-6">
+        <textarea class="form-control" rows="3" name="experience"></textarea>
+      </div>
+    </div>
 
-  <h3>9. What do you hope to gain from participating in the Scientists in the Classroom program?</h3>
-  <p><input type="text" name="goals"></p>
+    <h4>9. What do you hope to gain from participating in the Scientists in the Classroom program?</h4>
+    <div class="form-group">
+      <div class="indent col-md-6">
+        <textarea class="form-control" rows="3" name="goals"></textarea>
+      </div>
+    </div>
 
-  <h3>10. What is your overall availability like?</h3>
-  <p><input type="text" name="availability"></p>
+    <h4>10. What is your overall availability like?</h4>
+    <div class="form-group">
+      <div class="indent col-md-6">
+        <textarea class="form-control" rows="3" name="availability"></textarea>
+      </div>
+    </div>
 
-  <h3>11. This program requires that you visit the class you are matched with twice during the semester, possibly for multiple periods during the day. Will you be able to commit the time to do this?</h3>
-  <p><input type="checkbox" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</p>
+    <h4>11. This program requires that you visit the class you are matched with twice during the semester, possibly for multiple periods during the day. Will you be able to commit the time to do this?</h4>
+    <div class="form-group">
+      <div class="indent checkbox">
+        <label><input type="checkbox" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</label>
+      </div>
+    </div>
 
-  <h3>12. Sometimes the class you are matched with is not right in or near urban or University centers. Would you be willing to travel up to an hour to visit a classroom? (Keep in mind this would be only twice during the semester).</h3>
-  <p><input type="radio" name="less_than_30" value="yes"> Yes, that is not a problem.</p>
-  <p><input type="radio" name="less_than_30" value="no"> No, let's keep the class within 30 minutes of where I am.</p>
+    <h4>12. Sometimes the class you are matched with is not right in or near urban or University centers. Would you be willing to travel up to an hour to visit a classroom? (Keep in mind this would be only twice during the semester).</h4>
+    <div class="radio indent">
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="less_than_30" value="no"> Yes, that is not a problem.</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label"><input type="radio" name="less_than_30" value="yes"> No, let's keep the class within 30 minutes of where I am.</label>
+      </div>
+    </div>
 
-  <h3>13. If available, please include a link to a video of a talk you have given.</h3>
-  <p><input type="text" name="link"></p>
+    <h4>13. If available, please include a link to a video of a talk you have given.</h4>
+    <div class="form-group">
+      <div class="indent col-md-4">
+        <input type="text" class="form-control" name="link">
+      </div>
+    </div>
 
-  <h3>14. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h3>
-  <p><input type="checkbox" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</p>
+    <h4>14. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h4>
+    <div class="form-group">
+      <div class="indent checkbox">
+        <label><input type="checkbox" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</label>
+      </div>
+    </div>
 
-  <p><input type="submit" value="Submit"></p>
+    <div class="form-group">
+      <label class="col-md-5 control-label"></label>
+      <div class="col-md-2">
+        <input type="submit" class="btn btn-primary btn-block center-block" value="Submit">
+      </div>  
+    </div>
 
-</form>
+  </form>
+</div>
