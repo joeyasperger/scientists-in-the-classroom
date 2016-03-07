@@ -5,4 +5,7 @@ class MatchController < ApplicationController
         @scientists = Scientist.all
     end
 
+    def index
+        @matches = Match.all
+    end
 end

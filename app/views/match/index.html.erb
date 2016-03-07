@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-5 text-center"><h3>Teachers</h3></div>
+    <div class="col-xs-5 text-center"><h3>Scientists</h3></div>
+    <div class="col-xs-1"></div>
+  </div>
+  <div class="row"><hr class="col-md-10 col-md-offset-1"/></div>
+  <% @matches.each do |match| %>
+  <% teacher = match.teacher %>
+  <% scientist = match.scientist %>
+  <div class="row" id="match_<%= match.id %>">
+    <div class="col-xs-6" >   
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandMatch(<%= match.id %>)" style="cursor:pointer">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12"><strong>Location</strong>: <%= teacher.city %>, <%= teacher.state %> <%= teacher.zip_code %></div>
+              </div>
+              <div class="row">
+                <% if teacher.evolution and teacher.climate_change %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
+                <% elsif teacher.evolution %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution</div>
+                <% elsif teacher.climate_change %>
+                  <div class="col-sm-12"><strong>Topics wanted</strong>: Climate Change</div>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Grade levels</strong>: <%= teacher.grade %></div>
+              </div>
+              <div class="expanded-info" style="display:none">
+                <div class="row">
+                  <div class="col-sm-12"><strong>Email</strong>: <%= teacher.email %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Phone</strong>: <%= teacher.phone %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= teacher.communication_method %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Topics taught</strong>: <%= teacher.topics %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Details on what to cover</strong>: <%= teacher.topics_to_cover %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>How students will benefit</strong>: <%= teacher.benefits %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>School Requirements</strong>: <%= teacher.requirements %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandMatch(<%= match.id %>)" style="cursor:pointer">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12"><strong>Location</strong>: <%= scientist.city %>, <%= scientist.state %> <%= scientist.zip_code %></div>
+              </div>
+              <div class="row">
+                <% if scientist.evolution and scientist.climate_change %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution and Climate Change</div>
+                <% elsif scientist.evolution %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
+                <% elsif scientist.climate_change %>
+                  <div class="col-sm-12"><strong>Can talk about</strong>: Climate Change</div>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="col-sm-12"><strong>Occupation</strong>: <%= scientist.occupation %></div>
+              </div>
+              <div class="expanded-info" style="display:none">
+                <div class="row">
+                  <div class="col-sm-12"><strong>Email</strong>: <%= scientist.email %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Phone</strong>: <%= scientist.phone %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= scientist.communication_method %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Education</strong>: <%= scientist.education %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Specialization</strong>: <%= scientist.specialization %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Classroom experience</strong>: <%= scientist.experience %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Hopes to gain</strong>: <%= scientist.goals %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Overall availability</strong>: <%= scientist.availability %></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>  
+    </div>
+  </div>
+  <div class="row"><hr class="col-md-10 col-md-offset-1"/></div>
+  <% end %>
+</div>
+<style>
+hr {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  border-top: 1px solid #ddd;
+}
+</style>
+<script>
+function expandMatch(id){
+  if ($('#match_' + id + ' .expanded-info').css('display') == 'none'){
+    $('#match_' + id + ' .expanded-info').css('display', 'inline-block')
+  }
+  else{
+    $('#match_' + id + ' .expanded-info').css('display', 'none')
+  }
+}
+</script>

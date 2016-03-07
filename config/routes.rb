@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: "admin#home"
 
   get 'match' => 'match#new'
+  get 'matches' => 'match#index'
 
   get 'teachers/new' => 'teacher#new'
   post 'teachers' => 'teacher#create'
