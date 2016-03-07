@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307024519) do
-
+ActiveRecord::Schema.define(version: 20160307065711) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -60,8 +59,6 @@ ActiveRecord::Schema.define(version: 20160307024519) do
     t.string   "state"
     t.string   "email"
     t.string   "phone"
-    t.decimal  "lat"
-    t.decimal  "lng"
     t.string   "communication_method"
     t.string   "occupation"
     t.string   "education"
@@ -89,8 +86,6 @@ ActiveRecord::Schema.define(version: 20160307024519) do
     t.string   "state"
     t.string   "email"
     t.string   "phone"
-    t.decimal  "lat"
-    t.decimal  "lng"
     t.string   "school"
     t.string   "communication_method"
     t.string   "grade"
