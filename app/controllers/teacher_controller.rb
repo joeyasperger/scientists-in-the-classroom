@@ -1,4 +1,10 @@
 class TeacherController < ApplicationController
+  include Geokit::Geocoders
+  def test
+    @loc=GoogleGeocoder.geocode('100 Spear St, San Francisco, CA')
+    
+
+  end
 
   def new
     @states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California",
