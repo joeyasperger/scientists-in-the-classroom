@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'scientists/new' => 'scientist#new'
   post 'scientists' => 'scientist#create'
 
-  get 'teachers/test' => 'teacher#test'
+  #get 'teachers/test' => 'teacher#test'
   get 'scientists/test' => 'scientist#test'
 
   get 'matches/new' => 'match#new'

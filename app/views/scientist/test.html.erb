@@ -14,7 +14,12 @@
 <% end %>
 
 <% for scientist in Scientist.all %>
-    <% nearby_teachers = Teacher.within(10, :origin => [scientist.lat, scientist.lng]).all %>
+	<% if scientist.less_than_30 then %>
+		<% distance = 30 %>
+	<% else %>
+		<% distance = 50 %>
+	<% end %>
+    <% nearby_teachers = Teacher.within(distance, :origin => [scientist.lat, scientist.lng]).all %>
     <h2> Teachers near <%= scientist.name %> </h2>
     <%for nearby_teacher in nearby_teachers %>
     	<%= nearby_teacher.name %><br/>
