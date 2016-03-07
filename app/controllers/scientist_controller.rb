@@ -1,5 +1,5 @@
 class ScientistController < ApplicationController
-
+  include Geokit::Geocoders
   def new
     @states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California",
       "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
@@ -55,10 +55,23 @@ class ScientistController < ApplicationController
       scientist.read_expectations = false
     end
 
+    #geocode & store lat + lng
+    scientist_loc = GoogleGeocoder.geocode(scientist.city + ", " + 
+              scientist.state + " " + scientist.zip_code)
+    if scientist_loc.success
+      scientist.lat = scientist_loc.lat
+      scientist.lng = scientist_loc.lng
+    end 
     scientist.save
 
     redirect_to '/scientists/new'
 
+  end
+
+  def test
+    for scientist in Scientist.all
+      @nearby_teachers = Teacher.within(50, :origin => [scientist.lat, scientist.lng]).all
+    end
   end
 
 end
