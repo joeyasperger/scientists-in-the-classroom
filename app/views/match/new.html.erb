@@ -127,6 +127,7 @@
   </div>
 </div>
 <script>
+
 function expandTeacher(id){
   //if info isn't expanded, expand it and filter scientist list
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
@@ -139,10 +140,9 @@ function expandTeacher(id){
       url: '/matches/get_matched_scientists/' + id,
       success: function(data,status,xhr){
         console.log(data);
-        //set scientist's css to 0 if it's not in the list
-        $.each(data.all_scientist_ids, function(data.scientists_in_range, value) {
-          if ($.inArray(value, data.scientists_in_range) == -1) 
-            $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block') ;
+        //set scientist to invisible if it's not in the list
+        $.each(data.scientists_out_of_range, function(index, value) {
+            $('#scientist_' + value).css('display', 'none');
         });
         //set css of non useful scientists to display none
 
@@ -153,9 +153,25 @@ function expandTeacher(id){
       }
     });
   }
-  else{
+  else {
     //if it's already expanded, close it
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
+    //and get names of all scientists who we eliminated earlier
+    $.ajax({ 
+      type: 'GET',
+      url: '/matches/get_matched_scientists/' + id,
+      success: function(data,status,xhr){
+        console.log(data);
+        //if scientist is out of range, make it visible again
+        $.each(data.scientists_out_of_range, function(index, value) {
+            $('#scientist_' + value).css('display', 'inline-block');
+        });
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
+      }
+    });
   }
 }
 

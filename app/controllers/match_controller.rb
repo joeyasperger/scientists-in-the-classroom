@@ -8,11 +8,19 @@ class MatchController < ApplicationController
     def get_matched_scientists
     	curr_teacher = Teacher.find_by_id(params[:id])
     	array_of_ids = Array.new
+        far_scientists = Array.new
     	#default to 50 miles as distance for teachers
     	for scientist in Scientist.within(50, :origin => [curr_teacher.lat, curr_teacher.lng]).all do
-    		array_of_ids << scientist.id
+    		if ((curr_teacher.climate_change && scientist.climate_change) || 
+                (curr_teacher.evolution && scientist.evolution)) then
+                array_of_ids << scientist.id
+            end
     	end
-    	data = {:scientists_in_range => array_of_ids, :all_scientists => Scientist.all.id}
+        for scientist in Scientist.beyond(50, :origin => [curr_teacher.lat, curr_teacher.lng]).all do
+            far_scientists << scientist.id
+        end
+
+    	data = {:scientists_in_range => array_of_ids, :scientists_out_of_range => far_scientists}
   		render :json => data, :status => :ok
 
     end
