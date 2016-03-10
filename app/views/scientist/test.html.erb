@@ -1,15 +1,23 @@
 <% for scientist in Scientist.all %>
-	<h3> Scientist Coords </h3>
-	<%= scientist.name %>
+	<h3> <%= scientist.name %> </h3>
+	
 	<%= scientist.lat %>
 	<%= scientist.lng %>
+	<h4> Climate change </h4>
+	<%= scientist.climate_change %>
+	<h4> evolution </h4>
+	<%= scientist.evolution %>
 <% end %>
 
 
 <% for teacher in Teacher.all %>
-	<h3> teacher Coords </h3>
-	<%= teacher.name %>
+	<h3> <%= teacher.name %> </h3>
+	
 	<%= teacher.lat %>
+	<h4> Climate change </h4>
+	<%= teacher.climate_change %>
+	<h4> evolution </h4>
+	<%= teacher.evolution %>
 	<%= teacher.lng %>
 <% end %>
 
