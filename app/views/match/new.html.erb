@@ -129,7 +129,7 @@
 <script>
 
 function expandTeacher(id){
-  //if info isn't expanded, expand it and filter scientist list
+  //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
     //make all the scientists who have been hidden reappear
     $('.panel.panel-info.scientist').css('display', 'block')
@@ -137,6 +137,8 @@ function expandTeacher(id){
     $('.panel.panel-info.teacher').css('display', 'block')
     //make sure no other teachers have their info expanded
     $('.teacher .expanded-info').css('display', 'none')
+    //make sure no other scientists have their info expanded
+    $('.scientist .expanded-info').css('display', 'none')
     $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
     //get list of ids of scientists within range
     $.ajax({ 
@@ -169,6 +171,8 @@ function expandScientist(id){
   if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){
     //make sure no other scientists have their info expanded
     $('.scientist .expanded-info').css('display', 'none')
+    //make sure no other teachers have their info expanded
+    $('.teacher .expanded-info').css('display', 'none')
     //make all the scientists who have been hidden reappear
     $('.panel.panel-info.scientist').css('display', 'block')
     //make all the teachers who have been hidden reappear
