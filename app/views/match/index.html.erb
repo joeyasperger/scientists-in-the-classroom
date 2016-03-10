@@ -1,5 +1,38 @@
 <div class="container">
   <div class="row">
+    <div class="col-xs-12 col-md-10 col-md-offset-1">
+      <button type="button" id="show-filters" class="btn btn-default" onclick="showFiltering()">Show filtering options</button>
+      <form id="filter-options" class="form-inline">
+        <button type="button" class="btn btn-default" onclick="hideFiltering()">Hide filtering options</button>
+        <div class="form-group">
+          <label class="sr-only" for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Name" value=<%= @params[:name] %> >
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="institution">Institution</label>
+          <input type="text" class="form-control" id="institution" name="institution" placeholder="Institution/school"  value=<%= @params[:institution] %> >
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="city">City</label>
+          <input type="text" class="form-control" id="city" name="city" placeholder="City" value=<%= @params[:city] %> >
+        </div>
+        <div class="form-group">
+          <select name="state" class="form-control">
+            <option value="">Select state</option>
+            <% @states.each do |state| %>
+              <% if state ==  @params[:state] %> 
+              <option value="<%= state %>" selected=selected><%= state %></option>
+              <% else %>
+              <option value="<%= state %>"><%= state %></option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-default">Filter</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-1"></div>
     <div class="col-xs-5 text-center"><h3>Teachers</h3></div>
     <div class="col-xs-5 text-center"><h3>Scientists</h3></div>
@@ -9,12 +42,12 @@
   <% @matches.each do |match| %>
   <% teacher = match.teacher %>
   <% scientist = match.scientist %>
-  <div class="row" id="match_<%= match.id %>">
+  <div class="row" id="match_<%= match.id %>" onclick="expandMatch(<%= match.id %>)" style="cursor:pointer">
     <div class="col-xs-6" >   
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-10">
-          <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandMatch(<%= match.id %>)" style="cursor:pointer">
+          <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" >
             <div class="panel-heading">
               <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
             </div>
@@ -65,7 +98,7 @@
     <div class="col-xs-6">
       <div class="row">
         <div class="col-md-10">
-          <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandMatch(<%= match.id %>)" style="cursor:pointer">
+          <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>">
             <div class="panel-heading">
               <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
             </div>
@@ -130,6 +163,15 @@ hr {
   margin-bottom: 20px;
   border-top: 1px solid #ddd;
 }
+<% if @filtered %>
+#show-filters {
+  display:none;
+}
+<% else %>
+#filter-options {
+  display:none;
+}
+<% end %>
 </style>
 <script>
 function expandMatch(id){
@@ -139,5 +181,13 @@ function expandMatch(id){
   else{
     $('#match_' + id + ' .expanded-info').css('display', 'none')
   }
+}
+function showFiltering(){
+  $('#filter-options').css('display', 'inline-block')
+  $('#show-filters').css('display', 'none')
+}
+function hideFiltering(){
+  $('#filter-options').css('display', 'none')
+  $('#show-filters').css('display', 'inline-block')
 }
 </script>
