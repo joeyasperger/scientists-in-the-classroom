@@ -136,21 +136,17 @@ var sort_by = "none";
 function expandTeacher(id){
   //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
-    //make sure no other teachers have their info expanded
-    $('.teacher .expanded-info').css('display', 'none')
-    $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
-
     if (sort_by != "scientist") { //only do this stuff if going to sort by teacher
+      //make sure no other teachers have their info expanded
+      $('.teacher .expanded-info').css('display', 'none')
       sort_by = "teacher";
       document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
       //make all the scientists who have been hidden reappear
       $('.panel.panel-info.scientist').css('display', 'block')
-      //make all the teachers who have been hidden reappear
-      $('.panel.panel-info.teacher').css('display', 'block')
-     
+      // //make all the teachers who have been hidden reappear
+      // $('.panel.panel-info.teacher').css('display', 'block')
       //make sure no scientists have their info expanded
-      $('.scientist .expanded-info').css('display', 'none')
-      
+      $('.scientist .expanded-info').css('display', 'none')      
       //get list of ids of scientists within range
       $.ajax({ 
         type: 'GET',
@@ -168,7 +164,11 @@ function expandTeacher(id){
         }
       });
     }
+    //expand the user that was clicked   
+    $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
+    
   } else {
+    // if it's already expanded, close it
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
     if (sort_by != "scientist") {
       sort_by = "none";
@@ -177,7 +177,9 @@ function expandTeacher(id){
       $('.panel.panel-info.scientist').css('display', 'block')
       //make all the teachers who have been hidden reappear
       $('.panel.panel-info.teacher').css('display', 'block')
-      // if it's already expanded, close it
+      //make sure no scientists have their info expanded
+      $('.scientist .expanded-info').css('display', 'none')
+      
     }
   }
 }
@@ -185,12 +187,10 @@ function expandTeacher(id){
 
 function expandScientist(id){
   if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){ 
-    //make sure no other scientists have their info expanded
-    $('.scientist .expanded-info').css('display', 'none')
-    $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')
-
     if (sort_by != "teacher") { //only do this stuff if wanna filter by scientist
       sort_by = "scientist";
+      //make sure no other scientists have their info expanded
+      $('.scientist .expanded-info').css('display', 'none')
       document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
       //make sure no teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
@@ -216,6 +216,8 @@ function expandScientist(id){
         }
       });
     }
+    //expand the scientist that was clicked
+    $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')    
   } else {
     $('#scientist_' + id + ' .expanded-info').css('display', 'none')
     if (sort_by != "teacher") {
