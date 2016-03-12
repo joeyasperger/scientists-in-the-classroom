@@ -1,3 +1,4 @@
+<center><h2 id="sorting_by">click a teacher or scientist to start sorting by that type</h2></center>
 <div class="container">
   <div class="row">
     <div class="col-xs-1"></div>
@@ -116,6 +117,9 @@
                 <div class="row">
                   <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
                 </div>
+                <div class="row">
+                  <button onclick="createMatch(<%= scientist.id %>)">Match</button>
+                </div>
               </div>
             </div>
           </div>
@@ -128,80 +132,105 @@
 </div>
 <script>
 
+var sort_by = "none";
 function expandTeacher(id){
   //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
-    //make all the scientists who have been hidden reappear
-    $('.panel.panel-info.scientist').css('display', 'block')
-    //make all the teachers who have been hidden reappear
-    $('.panel.panel-info.teacher').css('display', 'block')
     //make sure no other teachers have their info expanded
     $('.teacher .expanded-info').css('display', 'none')
-    //make sure no other scientists have their info expanded
-    $('.scientist .expanded-info').css('display', 'none')
     $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
-    //get list of ids of scientists within range
-    $.ajax({ 
-      type: 'GET',
-      url: '/matches/get_matched_scientists/' + id,
-      success: function(data,status,xhr){
-        console.log(data);
-        //set scientist to invisible if it's on the list of far away scientists
-        $.each(data.incompatible_scientists, function(index, value) {
-            $('#scientist_' + value).css('display', 'none');
-        });
-      },
-      error: function(xhr,status,error){
-        console.log(xhr);
-        alert(error);
-      }
-    });
-  }
-  else {
-    //make all the scientists who have been hidden reappear
-    $('.panel.panel-info.scientist').css('display', 'block')
-    //make all the teachers who have been hidden reappear
-    $('.panel.panel-info.teacher').css('display', 'block')
-    // if it's already expanded, close it
+
+    if (sort_by != "scientist") { //only do this stuff if going to sort by teacher
+      sort_by = "teacher";
+      document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
+      //make all the scientists who have been hidden reappear
+      $('.panel.panel-info.scientist').css('display', 'block')
+      //make all the teachers who have been hidden reappear
+      $('.panel.panel-info.teacher').css('display', 'block')
+     
+      //make sure no scientists have their info expanded
+      $('.scientist .expanded-info').css('display', 'none')
+      
+      //get list of ids of scientists within range
+      $.ajax({ 
+        type: 'GET',
+        url: '/matches/get_matched_scientists/' + id,
+        success: function(data,status,xhr){
+          console.log(data);
+          //set scientist to invisible if it's on the list of far away scientists
+          $.each(data.incompatible_scientists, function(index, value) {
+              $('#scientist_' + value).css('display', 'none');
+          });
+        },
+        error: function(xhr,status,error){
+          console.log(xhr);
+          alert(error);
+        }
+      });
+    }
+  } else {
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
+    if (sort_by != "scientist") {
+      sort_by = "none";
+      document.getElementById("sorting_by").innerHTML = "click a teacher or scientist to start sorting by that type";
+      //make all the scientists who have been hidden reappear
+      $('.panel.panel-info.scientist').css('display', 'block')
+      //make all the teachers who have been hidden reappear
+      $('.panel.panel-info.teacher').css('display', 'block')
+      // if it's already expanded, close it
+    }
   }
 }
 
+
 function expandScientist(id){
-  if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){
+  if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){ 
     //make sure no other scientists have their info expanded
     $('.scientist .expanded-info').css('display', 'none')
-    //make sure no other teachers have their info expanded
-    $('.teacher .expanded-info').css('display', 'none')
-    //make all the scientists who have been hidden reappear
-    $('.panel.panel-info.scientist').css('display', 'block')
-    //make all the teachers who have been hidden reappear
-    $('.panel.panel-info.teacher').css('display', 'block')
     $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')
-    //get list of ids of compatible teachers
-    $.ajax({ 
-      type: 'GET',
-      url: '/matches/get_matched_teachers/' + id,
-      success: function(data,status,xhr){
-        console.log(data);
-        //set scientist to invisible if it's on the list of far away scientists
-        $.each(data.incompatible_teachers, function(index, value) {
-            $('#teacher_' + value).css('display', 'none');
-        });
-      },
-      error: function(xhr,status,error){
-        console.log(xhr);
-        alert(error);
-      }
-    });
-  }
-  else{
-    //make all the teachers who have been hidden reappear
-    $('.panel.panel-info.teacher').css('display', 'block')
-    //make all the scientists who have been hidden reappear
-    $('.panel.panel-info.scientist').css('display', 'block')
+
+    if (sort_by != "teacher") { //only do this stuff if wanna filter by scientist
+      sort_by = "scientist";
+      document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
+      //make sure no teachers have their info expanded
+      $('.teacher .expanded-info').css('display', 'none')
+      //make all the scientists who have been hidden reappear
+      $('.panel.panel-info.scientist').css('display', 'block')
+      //make all the teachers who have been hidden reappear
+      $('.panel.panel-info.teacher').css('display', 'block')
+      
+      //get list of ids of compatible teachers
+      $.ajax({ 
+        type: 'GET',
+        url: '/matches/get_matched_teachers/' + id,
+        success: function(data,status,xhr){
+          console.log(data);
+          //set scientist to invisible if it's on the list of far away scientists
+          $.each(data.incompatible_teachers, function(index, value) {
+              $('#teacher_' + value).css('display', 'none');
+          });
+        },
+        error: function(xhr,status,error){
+          console.log(xhr);
+          alert(error);
+        }
+      });
+    }
+  } else {
     $('#scientist_' + id + ' .expanded-info').css('display', 'none')
+    if (sort_by != "teacher") {
+      sort_by = "none";
+      document.getElementById("sorting_by").innerHTML = "click a teacher or scientist to start sorting by that type";
+      //make all the teachers who have been hidden reappear
+      $('.panel.panel-info.teacher').css('display', 'block')
+      //make all the scientists who have been hidden reappear
+      $('.panel.panel-info.scientist').css('display', 'block')
+    }
   }
+}
+
+function createMatch(id) {
+
 }
 
 
