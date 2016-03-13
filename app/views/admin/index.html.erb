@@ -1,12 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <form id="filter-options" class="form-inline">
+      <% if @alert %>
+        <div class="alert alert-success"><%= @alert %></div>
+      <% end %>
+      <form action='/admins/new' method="post" class="form-inline">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <div class="form-group">
           <label for="email">Add new admin:</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Email" >
+          <input type="text" class="form-control" id="email" name="email" placeholder="Email" >
         </div>
-        <button type="submint" class="btn btn-default">Add</button>
+        <button type="submit" class="btn btn-default">Add</button>
       </form>
       <h3 class='text-center'>Current Admins</h3>
       <table class="table">
@@ -16,7 +20,7 @@
             <% if admin == @curr_admin %>
               <td>you</td>
             <% else %>
-              <td><%= link_to "Remove", "admins/#{admin.id}", method: :delete %></td>
+              <td><%= link_to "Remove", "/admins/#{admin.id}", method: :delete %></td>
             <% end %>
           </tr>
         <% end %>

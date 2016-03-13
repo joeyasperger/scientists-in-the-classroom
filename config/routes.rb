@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   devise_for :admins
   root to: "match#new"
+
   get 'admins' => 'admin#index'
+  delete 'admins/:id' => 'admin#destroy'
+  post 'admins/new' => 'admin#new'
 
   get 'match' => 'match#new'
   get 'matches' => 'match#index'
