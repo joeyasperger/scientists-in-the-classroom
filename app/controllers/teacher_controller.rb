@@ -1,4 +1,41 @@
 class TeacherController < ApplicationController
+  include Geokit::Geocoders
+  def test
+    @loc=GoogleGeocoder.geocode('100 Spear St, San Francisco, CA')
+    @scientist = Scientist.find_by_name("Young Lee")
+    @teacher = Teacher.find_by_name("Jeff Rogers")
+    if (@scientist.lat == nil) then
+      @scientist_loc = GoogleGeocoder.geocode(@scientist.city + ", " + 
+              @scientist.state + " " + @scientist.zip_code)
+      if @scientist_loc.success
+        @scientist.lat = @scientist_loc.lat
+        @scientist.lng = @scientist_loc.lng
+        @scientist.save
+        @scientist_success = "SUCCESS"
+      else
+        @scientist_success = "FAILURE"
+      end
+    end
+    if (@teacher.lat == nil) then
+      @teacher_loc = GoogleGeocoder.geocode(@teacher.city + ", " + 
+              @teacher.state + " " + @teacher.zip_code)
+      if @teacher_loc.success
+        @teacher.lat = @teacher_loc.lat
+        @teacher.lng = @teacher_loc.lng
+        @teacher.save
+        @teacher_success = "SUCCESS"
+      else
+        @teacher_success = "FAILURE"
+      end
+    end
+
+    @nearby_teacher = Teacher.within(50, :origin => [@scientist.lat, @scientist.lng]).first
+    if (@nearby_teacher == nil) then
+      @nearby_teacher = Teacher.new
+      @nearby_teacher.name = "FAILURE"
+      @nearby_teacher.save
+    end
+  end
 
   def new
     @states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California",
@@ -47,7 +84,13 @@ class TeacherController < ApplicationController
     else
       teacher.approved = false
     end
-
+    #geocode & store lat + lng
+    teacher_loc = GoogleGeocoder.geocode(teacher.city + ", " + 
+              teacher.state + " " + teacher.zip_code)
+    if teacher_loc.success
+      teacher.lat = teacher_loc.lat
+      teacher.lng = teacher_loc.lng
+    end 
     teacher.save
 
     redirect_to '/teachers/new'
