@@ -141,12 +141,16 @@ function expandTeacher(id){
       $('.teacher .expanded-info').css('display', 'none')
       sort_by = "teacher";
       document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
-      //make all the scientists who have been hidden reappear
-      $('.panel.panel-info.scientist').css('display', 'block')
+      
       // //make all the teachers who have been hidden reappear
       // $('.panel.panel-info.teacher').css('display', 'block')
+
       //make sure no scientists have their info expanded
-      $('.scientist .expanded-info').css('display', 'none')      
+      $('.scientist .expanded-info').css('display', 'none')   
+
+      // //make all the scientists who have been hidden reappear
+      // $('.panel.panel-info.scientist').css('display', 'block') 
+
       //get list of ids of scientists within range
       $.ajax({ 
         type: 'GET',
@@ -157,6 +161,10 @@ function expandTeacher(id){
           $.each(data.incompatible_scientists, function(index, value) {
               $('#scientist_' + value).css('display', 'none');
           });
+          //set scientist to visible if on list of compatible scientists
+          $.each(data.compatible_scientists, function(index, value) {
+              $('#scientist_' + value).css('display', 'block');
+          });
         },
         error: function(xhr,status,error){
           console.log(xhr);
@@ -165,8 +173,7 @@ function expandTeacher(id){
       });
     }
     //expand the user that was clicked   
-    $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
-    
+    $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')   
   } else {
     // if it's already expanded, close it
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
@@ -194,10 +201,10 @@ function expandScientist(id){
       document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
       //make sure no teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
-      //make all the scientists who have been hidden reappear
-      $('.panel.panel-info.scientist').css('display', 'block')
-      //make all the teachers who have been hidden reappear
-      $('.panel.panel-info.teacher').css('display', 'block')
+      // //make all the scientists who have been hidden reappear
+      // $('.panel.panel-info.scientist').css('display', 'block')
+      // //make all the teachers who have been hidden reappear
+      // $('.panel.panel-info.teacher').css('display', 'block')
       
       //get list of ids of compatible teachers
       $.ajax({ 
@@ -205,9 +212,13 @@ function expandScientist(id){
         url: '/matches/get_matched_teachers/' + id,
         success: function(data,status,xhr){
           console.log(data);
-          //set scientist to invisible if it's on the list of far away scientists
+          //set teacher to invisible if it's on the list of far away teachers
           $.each(data.incompatible_teachers, function(index, value) {
               $('#teacher_' + value).css('display', 'none');
+          });
+          //set teacher to visible if it's on the list of compatible teachers
+          $.each(data.compatible_teachers, function(index, value) {
+              $('#teacher_' + value).css('display', 'block');
           });
         },
         error: function(xhr,status,error){
@@ -227,6 +238,8 @@ function expandScientist(id){
       $('.panel.panel-info.teacher').css('display', 'block')
       //make all the scientists who have been hidden reappear
       $('.panel.panel-info.scientist').css('display', 'block')
+      //make sure no teachers have their info expanded
+      $('.teacher .expanded-info').css('display', 'none')
     }
   }
 }
