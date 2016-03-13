@@ -29,14 +29,26 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <% puts @page %>
         <% if @page == 'match' %>
-          <li class="active"><a href="#">Match Teachers with Scientists <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="#">Match Teachers with Scientists</a></li>
           <li><a href="/matches">Current Matches</a></li>
-        <% else %>
+          <li><a href="/admins">Manage Admins</a></li>
+        <% elsif @page == 'matches' %>
           <li><a href="/match">Match Teachers with Scientists </a></li>
-          <li class="active"><a href="#">Current Matches<span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="#">Current Matches</a></li>
+          <li><a href="/admins">Manage Admins</a></li>
+        <% else %>
+          <li><a href="/match">Match Teachers with Scientists</a></li>
+          <li><a href="/matches">Current Matches</a></li>
+          <li class="active"><a href="#">Manage Admins</a></li>
         <% end %>
       </ul>
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Logout", destroy_admin_session_path, method: :delete %></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

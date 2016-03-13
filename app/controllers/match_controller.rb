@@ -1,5 +1,7 @@
 class MatchController < ApplicationController
 
+    before_action :authenticate_admin!
+
     def new
         @page = 'match'
         @teachers = Teacher.all
@@ -55,6 +57,7 @@ class MatchController < ApplicationController
             "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
             "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
             "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+    end
 
     def get_matched_scientists
     	curr_teacher = Teacher.find_by_id(params[:id])
@@ -97,4 +100,5 @@ class MatchController < ApplicationController
         data = {:incompatible_teachers => incompatible_teachers}
         render :json => data, :status => :ok
     end
+
 end
