@@ -9,11 +9,71 @@
     margin-top:30px;
   }
 </style>
+<script>
+  function validateForm() {
+    var validated = true;
+
+    $fields = $(".form-group")
+          .find("select, textarea, input")
+          .not("input[name=communication_method_other]");
+
+    $fields.each(function(index) {
+      $(this).change(function() {
+          $(this).parents('div[class^="form-group"]').removeClass("has-error");
+        });
+      if (!$(this).val()) {
+        validated = false;
+        $(this).parents('div[class^="form-group"]').addClass("has-error");
+      } else {
+        $(this).parents('div[class^="form-group"]').removeClass("has-error");
+      }
+     }); 
+
+    var radioNames = [];
+    $("input:radio").each(function() {
+      var name = $(this).attr("name");
+      if ($.inArray(name, radioNames) == -1) radioNames.push(name);
+    });
+
+    $.each(radioNames, function(i, value) {
+      if( $("input[name=" + value + "]:radio:checked").length == 0 ) {
+        validated = false;
+        $("input[name=" + value + "]:radio").parents('div[class^="form-group"]').addClass("has-error");
+      } else {
+        $("input[name=" + value + "]:radio").parents('div[class^="form-group"]').removeClass("has-error");
+      }
+    });
+
+    var checkboxNames = [];
+    $("input:checkbox").each(function() {
+      var name = $(this).attr("name");
+      if ($.inArray(name, checkboxNames) == -1) checkboxNames.push(name);
+    });
+
+    $.each(checkboxNames, function(i, value) {
+      if( $("input[name=" + value + "]:checkbox:checked").length == 0 ) {
+        validated = false;
+        $("input[name=" + value + "]:checkbox").parents('div[class^="form-group"]').addClass("has-error");
+      } else {
+        $("input[name=" + value + "]:radio").parents('div[class^="form-group"]').removeClass("has-error");
+      }
+    });
+
+    if (validated) {
+      $("form").submit();
+    } else {
+      if (!$(".alert-danger")[0]) {
+        $("form").before("<div class=\"alert alert-danger\" role=\"alert\"><strong>Alert!</strong> Please fill out all required fields.</div>")
+      }
+      $("body").scrollTop(0);
+    }
+  }
+</script>
 <div class="container">
+  <h3>Teacher Application</h3>
   <form action="/teachers" method="post" class="form-horizontal" role="form">
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-    <h3>Teacher Application</h3>
-    <h4>1. Contact Information</h4>
+    <h4>*1. Contact Information</h4>
     <div class="form-group">
       <label class="control-label col-md-2">Name (First and Last):</label>
       <div class="col-md-4">
@@ -61,16 +121,12 @@
       </div>
     </div>
 
-    <h4>2. You will be in communication with your scientist consistently throughout the semester. What is your preferred method of communication?</h4>
+    <h4>*2. You will be in communication with your scientist consistently throughout the semester. What is your preferred method of communication?</h4>
     <div class="radio indent">
       <div class="form-group">
-        <label class="control-label"><input type="radio" name="communication_method" value="phone">Phone</label>
-      </div>
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="communication_method" value="email">Email</label>
-      </div>
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="communication_method" value="other">Other (please specify)</label>
+        <label class="control-label"><input type="radio" name="communication_method" value="phone">Phone</label><br/>
+        <label class="control-label"><input type="radio" name="communication_method" value="email">Email</label><br/>
+        <label class="control-label"><input type="radio" name="communication_method" value="other">Other (please specify)</label><br/>
       </div>
     </div>
     <div class="form-group">
@@ -79,69 +135,65 @@
       </div>
     </div>
 
-    <h4>3. What grade level(s) do you teach?</h4>
+    <h4>*3. What grade level(s) do you teach?</h4>
     <div class="form-group">
       <div class="indent col-md-4">
         <input type="text" class="form-control" name="grade">
       </div>
     </div>
 
-    <h4>4. What topic(s) do you teach?</h4>
+    <h4>*4. What topic(s) do you teach?</h4>
     <div class="form-group">
       <div class="indent col-md-4">
         <input type="text" class="form-control" name="topics">
       </div>
     </div>
 
-    <h4>5. What times do the classes that you would like to participate in the Scientists in the Classroom program meet?</h4>
+    <h4>*5. What times do the classes that you would like to participate in the Scientists in the Classroom program meet?</h4>
     <div class="form-group">
       <div class="indent col-md-6">
         <textarea class="form-control" rows="3" name="class_times"></textarea>
       </div>
     </div>
 
-    <h4>6. What topic(s) do you want the scientist to cover in your class?</h4>
+    <h4>*6. What topic(s) do you want the scientist to cover in your class?</h4>
     <div class="radio indent">
       <div class="form-group">
-        <label class="control-label"><input type="radio" name="topics" value="climate_change"> Climate Change</label>
-      </div>
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="topics" value="evolution"> Evolution</label>
-      </div>
-      <div class="form-group">
+        <label class="control-label"><input type="radio" name="topics" value="climate_change"> Climate Change</label><br/>
+        <label class="control-label"><input type="radio" name="topics" value="evolution"> Evolution</label><br/>
         <label class="control-label"><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</label>
       </div>
     </div>
 
-    <h4>7. Please provide details on what you want the scientist to cover in your class.</h4>
+    <h4>*7. Please provide details on what you want the scientist to cover in your class.</h4>
     <div class="form-group">
       <div class="indent col-md-6">
         <textarea class="form-control" rows="3" name="topics_to_cover"></textarea>
       </div>
     </div>
 
-    <h4>8. How do you see you and your students benefiting from the Scientists in the Classroom program?</h4>
+    <h4>*8. How do you see you and your students benefiting from the Scientists in the Classroom program?</h4>
     <div class="form-group">
       <div class="indent col-md-6">
         <textarea class="form-control" rows="3" name="benefits"></textarea>
       </div>
     </div>
 
-    <h4>9. Does your school have any requirements, such as background checks, for guests to complete before they begin to work with your class? Please list them if so. This is important for the scientist to know and complete before being able to come into the classroom (Scientists are only vetted for their scientific background, but NCSE can help with all of the appropriate procedures if your school has rules for allowing guests).</h4>
+    <h4>*9. Does your school have any requirements, such as background checks, for guests to complete before they begin to work with your class? Please list them if so. This is important for the scientist to know and complete before being able to come into the classroom (Scientists are only vetted for their scientific background, but NCSE can help with all of the appropriate procedures if your school has rules for allowing guests).</h4>
     <div class="form-group">
       <div class="indent col-md-6">
         <textarea class="form-control" rows="3" name="requirements"></textarea>
       </div>
     </div>
 
-    <h4>10. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h4>
+    <h4>*10. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h4>
     <div class="form-group">
       <div class="indent checkbox">
         <label><input type="checkbox" name="read_expectations"> I have read the expectations for the program and am committing to my matched scientist visiting my class twice during the semester!</label>
       </div>
     </div>
 
-    <h4>11. Have you talked to your principal and received approval for the Scientists in the Classroom program?</h4>
+    <h4>*11. Have you talked to your principal and received approval for the Scientists in the Classroom program?</h4>
     <div class="form-group">
       <div class="indent checkbox">
         <label><input type="checkbox" name="approved"> Yes, I have already talked to and received approval from my principal about the Scientist in the Classroom program!</label>
@@ -151,7 +203,7 @@
     <div class="form-group">
       <label class="col-md-5 control-label"></label>
       <div class="col-md-2">
-        <input type="submit" class="btn btn-primary btn-block center-block" value="Submit">
+        <button type="button" onclick="validateForm()" class="btn btn-primary btn-block center-block">Submit</button>
       </div>  
     </div>
 
