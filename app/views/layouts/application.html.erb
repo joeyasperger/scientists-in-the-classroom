@@ -16,7 +16,7 @@
 	<!-- Show flash messages -->
 <!-- 	<p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p> -->
-
+<% if not @page and (request.fullpath == '/admins/edit' or request.fullpath == '/admins') then @page='change_password' end %>
 <% if defined? @page %>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -35,20 +35,27 @@
         <% puts @page %>
         <% if @page == 'match' %>
           <li class="active"><a href="#">Match Teachers with Scientists</a></li>
-          <li><a href="/matches">Current Matches</a></li>
-          <li><a href="/admins">Manage Admins</a></li>
-        <% elsif @page == 'matches' %>
-          <li><a href="/match">Match Teachers with Scientists </a></li>
-          <li class="active"><a href="#">Current Matches</a></li>
-          <li><a href="/admins">Manage Admins</a></li>
         <% else %>
-          <li><a href="/match">Match Teachers with Scientists</a></li>
+          <li><a href="/match">Match Teachers with Scientists </a></li>
+        <% end %>
+        <% if @page == 'matches' %>
+          <li class="active"><a href="#">Current Matches</a></li>
+        <% else %>
           <li><a href="/matches">Current Matches</a></li>
+        <% end %>
+        <% if @page == 'admins' %>
           <li class="active"><a href="#">Manage Admins</a></li>
+        <% else %>
+          <li><a href="/admins">Manage Admins</a></li>
         <% end %>
       </ul>
       <div class="navbar-right">
         <ul class="nav navbar-nav">
+          <% if @page == 'change_password' %>
+            <li class="active"><a href="#">Change Password</a></li>
+          <% else %>
+            <li><a href="/admins/edit">Change Password</a></li>
+          <% end %>
           <li><%= link_to "Logout", destroy_admin_session_path, method: :delete %></li>
         </ul>
       </div>
