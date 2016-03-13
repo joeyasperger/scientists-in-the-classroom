@@ -53,6 +53,20 @@ class MatchController < ApplicationController
         data = {:incompatible_teachers => incompatible_teachers,
                 :compatible_teachers => compatible_teachers}
         render :json => data, :status => :ok
+    end
 
+    def create_match 
+        # @teacher = Teacher.find_by_id(params[:teacher_id])
+        # if (@teacher == nil) then
+        #     raise params.inspect
+        # end
+        # @scientist = Scientist.find_by_id(params[:scientist_id])
+        @scientist_param = params[:scientist_id]
+        @teacher_param = params[:teacher_id]
+        #@new_match = Match.new
+        #@new_match.teacher_id = params[:teacher_id]
+        #@new_match.scientist_id = params[:scientist_id]
+        #@new_match.save
+        #redirect_to '/matches/new'
     end
 end

@@ -1,4 +1,5 @@
 <center><h2 id="sorting_by">click a teacher or scientist to start sorting by that type</h2></center>
+<center><h2>You just matched some people!</h2></center>
 <div class="container">
   <div class="row">
     <div class="col-xs-1"></div>
@@ -117,8 +118,7 @@
                 <div class="row">
                   <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
                 </div>
-                <div class="row">
-                  <button onclick="createMatch(<%= scientist.id %>)">Match</button>
+                <div class="row match_button_location" id="match_scientist_<%=scientist.id %>">
                 </div>
               </div>
             </div>
@@ -133,6 +133,7 @@
 <script>
 
 var sort_by = "none";
+var id_sorting_by = -1;
 function expandTeacher(id){
   //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
@@ -140,17 +141,10 @@ function expandTeacher(id){
       //make sure no other teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
       sort_by = "teacher";
+      id_sorting_by = id;
       document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
-      
-      // //make all the teachers who have been hidden reappear
-      // $('.panel.panel-info.teacher').css('display', 'block')
-
       //make sure no scientists have their info expanded
       $('.scientist .expanded-info').css('display', 'none')   
-
-      // //make all the scientists who have been hidden reappear
-      // $('.panel.panel-info.scientist').css('display', 'block') 
-
       //get list of ids of scientists within range
       $.ajax({ 
         type: 'GET',
@@ -185,8 +179,7 @@ function expandTeacher(id){
       //make all the teachers who have been hidden reappear
       $('.panel.panel-info.teacher').css('display', 'block')
       //make sure no scientists have their info expanded
-      $('.scientist .expanded-info').css('display', 'none')
-      
+      $('.scientist .expanded-info').css('display', 'none')      
     }
   }
 }
@@ -196,16 +189,12 @@ function expandScientist(id){
   if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){ 
     if (sort_by != "teacher") { //only do this stuff if wanna filter by scientist
       sort_by = "scientist";
+      id_sorting_by = id;
       //make sure no other scientists have their info expanded
       $('.scientist .expanded-info').css('display', 'none')
       document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
       //make sure no teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
-      // //make all the scientists who have been hidden reappear
-      // $('.panel.panel-info.scientist').css('display', 'block')
-      // //make all the teachers who have been hidden reappear
-      // $('.panel.panel-info.teacher').css('display', 'block')
-      
       //get list of ids of compatible teachers
       $.ajax({ 
         type: 'GET',
@@ -226,6 +215,15 @@ function expandScientist(id){
           alert(error);
         }
       });
+    } else {
+      // document.getElementById("match_scientist_" + id).innerHTML = '<button onclick="createMatch(' + id + ')"">Match</button>';
+
+
+      console.log("id: " + id, "teacher_id: " + id_sorting_by);
+      var list = document.getElementsByClassName("match_button_location");
+      for (i = 0; i < list.length; i++) {
+        list[i].innerHTML = '<%= button_to("Match", action: "create_match", params: { scientist_id: ' + id + ', teacher_id:' + id_sorting_by +'}) %>';
+      }
     }
     //expand the scientist that was clicked
     $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')    
