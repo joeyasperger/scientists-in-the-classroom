@@ -6,6 +6,8 @@
     <div class="col-xs-1"></div>
   </div>
   <div class="row">
+
+    <!-- teachers -->
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
       <% @teachers.each do |teacher| %>
       <div class="row">
@@ -39,7 +41,7 @@
                   <div class="col-sm-12"><strong>Phone</strong>: <%= teacher.phone %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= teacher.communication_method %></div>
+                  <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= teacher.communication_method %></div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12"><strong>Topics taught</strong>: <%= teacher.topics %></div>
@@ -60,6 +62,8 @@
       </div>
       <% end %>
     </div>
+
+    <!-- scientists -->
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
       <% @scientists.each do |scientist| %>
       <div class="row">
@@ -92,7 +96,7 @@
                   <div class="col-sm-12"><strong>Phone</strong>: <%= scientist.phone %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preffered Communication</strong>: <%= scientist.communication_method %></div>
+                  <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= scientist.communication_method %></div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12"><strong>Education</strong>: <%= scientist.education %></div>
@@ -123,23 +127,82 @@
   </div>
 </div>
 <script>
+
 function expandTeacher(id){
+  //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
+    //make all the scientists who have been hidden reappear
+    $('.panel.panel-info.scientist').css('display', 'block')
+    //make all the teachers who have been hidden reappear
+    $('.panel.panel-info.teacher').css('display', 'block')
+    //make sure no other teachers have their info expanded
     $('.teacher .expanded-info').css('display', 'none')
+    //make sure no other scientists have their info expanded
+    $('.scientist .expanded-info').css('display', 'none')
     $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')
+    //get list of ids of scientists within range
+    $.ajax({ 
+      type: 'GET',
+      url: '/matches/get_matched_scientists/' + id,
+      success: function(data,status,xhr){
+        console.log(data);
+        //set scientist to invisible if it's on the list of far away scientists
+        $.each(data.incompatible_scientists, function(index, value) {
+            $('#scientist_' + value).css('display', 'none');
+        });
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
+      }
+    });
   }
-  else{
+  else {
+    //make all the scientists who have been hidden reappear
+    $('.panel.panel-info.scientist').css('display', 'block')
+    //make all the teachers who have been hidden reappear
+    $('.panel.panel-info.teacher').css('display', 'block')
+    // if it's already expanded, close it
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
   }
 }
 
 function expandScientist(id){
   if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){
+    //make sure no other scientists have their info expanded
     $('.scientist .expanded-info').css('display', 'none')
+    //make sure no other teachers have their info expanded
+    $('.teacher .expanded-info').css('display', 'none')
+    //make all the scientists who have been hidden reappear
+    $('.panel.panel-info.scientist').css('display', 'block')
+    //make all the teachers who have been hidden reappear
+    $('.panel.panel-info.teacher').css('display', 'block')
     $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')
+    //get list of ids of compatible teachers
+    $.ajax({ 
+      type: 'GET',
+      url: '/matches/get_matched_teachers/' + id,
+      success: function(data,status,xhr){
+        console.log(data);
+        //set scientist to invisible if it's on the list of far away scientists
+        $.each(data.incompatible_teachers, function(index, value) {
+            $('#teacher_' + value).css('display', 'none');
+        });
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
+      }
+    });
   }
   else{
+    //make all the teachers who have been hidden reappear
+    $('.panel.panel-info.teacher').css('display', 'block')
+    //make all the scientists who have been hidden reappear
+    $('.panel.panel-info.scientist').css('display', 'block')
     $('#scientist_' + id + ' .expanded-info').css('display', 'none')
   }
 }
+
+
 </script>

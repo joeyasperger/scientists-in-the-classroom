@@ -4,5 +4,5 @@ class Admin < ActiveRecord::Base
   # I enabled :confirmable, :lockable, :timeoutable, which are not defaults
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable, :timeoutable
+          :lockable, :timeoutable
 end
