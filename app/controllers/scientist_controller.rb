@@ -64,7 +64,7 @@ class ScientistController < ApplicationController
     end 
     scientist.save
 
-    redirect_to '/scientists/new'
+    redirect_to '/scientists/thankyou'
 
   end
 
