@@ -56,17 +56,28 @@ class MatchController < ApplicationController
     end
 
     def create_match 
-        # @teacher = Teacher.find_by_id(params[:teacher_id])
+        @teacher = Teacher.find_by_id(params[:teacher_id])
         # if (@teacher == nil) then
         #     raise params.inspect
         # end
-        # @scientist = Scientist.find_by_id(params[:scientist_id])
-        @scientist_param = params[:scientist_id]
-        @teacher_param = params[:teacher_id]
+        @scientist = Scientist.find_by_id(params[:scientist_id])
+        if (@teacher != nil && @scientist != nil) then
+            match = Match.new
+            match.teacher_id = @teacher.id
+            match.scientist_id = @scientist.id
+            @scientist.teachers << @teacher
+            @teacher.scientists << @scientist
+            @scientist.save
+            @teacher.save
+            match.save
+            new_match = {match_id: match.id}
+            render :json => new_match, :status => :ok
+        else
+        end
         #@new_match = Match.new
         #@new_match.teacher_id = params[:teacher_id]
         #@new_match.scientist_id = params[:scientist_id]
         #@new_match.save
-        #redirect_to '/matches/new'
+        # redirect_to '/matches/create_match'
     end
 end

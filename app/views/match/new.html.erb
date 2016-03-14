@@ -1,5 +1,10 @@
 <center><h2 id="sorting_by">click a teacher or scientist to start sorting by that type</h2></center>
-<center><h2>You just matched some people!</h2></center>
+<% if (params[:id] != nil) %>
+  <% match = Match.find_by_id(params[:id]) %>
+  <% matched_scientist = Scientist.find_by_id(match.scientist_id) %>
+  <% matched_teacher = Teacher.find_by_id(match.teacher_id) %>
+  <center><h2>You just matched <%= matched_scientist.name %> with <%= matched_teacher.name %></h2></center>
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-xs-1"></div>
@@ -118,7 +123,7 @@
                 <div class="row">
                   <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
                 </div>
-                <div class="row match_button_location" id="match_scientist_<%=scientist.id %>">
+                <div class="row match_button_location" id="match_scientist_<%=scientist.id %>"><button type="button" onclick="createMatch(<%=scientist.id%>)">Match</button>
                 </div>
               </div>
             </div>
@@ -217,13 +222,33 @@ function expandScientist(id){
       });
     } else {
       // document.getElementById("match_scientist_" + id).innerHTML = '<button onclick="createMatch(' + id + ')"">Match</button>';
+      // document.getElementById("match")
+      // $.post('/matches/create_match', {
+      //   scientist_id: id,
+      //   teacher_id: id_sorting_by
+      // }); 
+      //   success: function(data,status,xhr){
+      //     console.log(data);
+      //     //set teacher to invisible if it's on the list of far away teachers
+      //     $.each(data.incompatible_teachers, function(index, value) {
+      //         $('#teacher_' + value).css('display', 'none');
+      //     });
+      //     //set teacher to visible if it's on the list of compatible teachers
+      //     $.each(data.compatible_teachers, function(index, value) {
+      //         $('#teacher_' + value).css('display', 'block');
+      //     });
+      //   },
+      //   error: function(xhr,status,error){
+      //     console.log(xhr);
+      //     alert(error);
+      //   }
+      // });
 
-
-      console.log("id: " + id, "teacher_id: " + id_sorting_by);
-      var list = document.getElementsByClassName("match_button_location");
-      for (i = 0; i < list.length; i++) {
-        list[i].innerHTML = '<%= button_to("Match", action: "create_match", params: { scientist_id: ' + id + ', teacher_id:' + id_sorting_by +'}) %>';
-      }
+      // console.log("id: " + id, "teacher_id: " + id_sorting_by);
+      // var list = document.getElementsByClassName("match_button_location");
+      // for (i = 0; i < list.length; i++) {
+      //   list[i].innerHTML = '<%= button_to("Match", action: "create_match", params: { scientist_id: ' + id + ', teacher_id:' + id_sorting_by +'}) %>';
+      // }
     }
     //expand the scientist that was clicked
     $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')    
@@ -243,7 +268,13 @@ function expandScientist(id){
 }
 
 function createMatch(id) {
-
+  $.post('/matches/create_match', {
+    scientist_id: id,
+    teacher_id: id_sorting_by
+  }, function success(new_match) {
+    console.log("new_match: " + new_match.match_id);
+    window.location.replace('/matches/new/' + new_match.match_id);
+  }); 
 }
 
 
