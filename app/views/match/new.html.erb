@@ -16,121 +16,139 @@
 
     <!-- teachers -->
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
+      <% teachers_tried = 0 %>
       <% @teachers.each do |teacher| %>
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-          <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandTeacher(<%= teacher.id %>)" style="cursor:pointer">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-sm-12"><strong>Location</strong>: <%= teacher.city %>, <%= teacher.state %> <%= teacher.zip_code %></div>
+      <% if (teacher.scientists.size == 0) then %>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-10">
+            <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandTeacher(<%= teacher.id %>)" style="cursor:pointer">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
               </div>
-              <div class="row">
-                <% if teacher.evolution and teacher.climate_change %>
-                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
-                <% elsif teacher.evolution %>
-                  <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution</div>
-                <% elsif teacher.climate_change %>
-                  <div class="col-sm-12"><strong>Topics wanted</strong>: Climate Change</div>
-                <% end %>
-              </div>
-              <div class="row">
-                <div class="col-sm-12"><strong>Grade levels</strong>: <%= teacher.grade %></div>
-              </div>
-              <div class="expanded-info" style="display:none">
+              <div class="panel-body">
                 <div class="row">
-                  <div class="col-sm-12"><strong>Email</strong>: <%= teacher.email %></div>
+                  <div class="col-sm-12"><strong>Location</strong>: <%= teacher.city %>, <%= teacher.state %> <%= teacher.zip_code %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Phone</strong>: <%= teacher.phone %></div>
+                  <% if teacher.evolution and teacher.climate_change %>
+                    <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution and Climate Change</div>
+                  <% elsif teacher.evolution %>
+                    <div class="col-sm-12"><strong>Topics wanted</strong>: Evolution</div>
+                  <% elsif teacher.climate_change %>
+                    <div class="col-sm-12"><strong>Topics wanted</strong>: Climate Change</div>
+                  <% end %>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= teacher.communication_method %></div>
+                  <div class="col-sm-12"><strong>Grade levels</strong>: <%= teacher.grade %></div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Topics taught</strong>: <%= teacher.topics %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Details on what to cover</strong>: <%= teacher.topics_to_cover %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>How students will benefit</strong>: <%= teacher.benefits %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>School Requirements</strong>: <%= teacher.requirements %></div>
+                <div class="expanded-info" style="display:none">
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Email</strong>: <%= teacher.email %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Phone</strong>: <%= teacher.phone %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= teacher.communication_method %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Topics taught</strong>: <%= teacher.topics %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Details on what to cover</strong>: <%= teacher.topics_to_cover %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>How students will benefit</strong>: <%= teacher.benefits %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>School Requirements</strong>: <%= teacher.requirements %></div>
+                  </div>
+                  <div class="row teacher_match_button"><button type="button" onclick="createMatch(<%=teacher.id%>)">Match</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <% else %>
+          <% teachers_tried += 1 %>
+          <% if (teachers_tried == Teacher.all.size) then %>
+            <h4> No Unmatched Teachers </h4>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
 
     <!-- scientists -->
     <div class="col-xs-6" style="overflow-y: scroll; height:600px">
+      <% scientists_tried = 0 %>
       <% @scientists.each do |scientist| %>
-      <div class="row">
-        <div class="col-md-10">
-          <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandScientist(<%= scientist.id %>)" style="cursor:pointer">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-sm-12"><strong>Location</strong>: <%= scientist.city %>, <%= scientist.state %> <%= scientist.zip_code %></div>
+      <% if (scientist.teachers.size == 0) then %>
+        <div class="row">
+          <div class="col-md-10">
+            <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandScientist(<%= scientist.id %>)" style="cursor:pointer">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
               </div>
-              <div class="row">
-                <% if scientist.evolution and scientist.climate_change %>
-                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution and Climate Change</div>
-                <% elsif scientist.evolution %>
-                  <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
-                <% elsif scientist.climate_change %>
-                  <div class="col-sm-12"><strong>Can talk about</strong>: Climate Change</div>
-                <% end %>
-              </div>
-              <div class="row">
-                <div class="col-sm-12"><strong>Occupation</strong>: <%= scientist.occupation %></div>
-              </div>
-              <div class="expanded-info" style="display:none">
+              <div class="panel-body">
                 <div class="row">
-                  <div class="col-sm-12"><strong>Email</strong>: <%= scientist.email %></div>
+                  <div class="col-sm-12"><strong>Location</strong>: <%= scientist.city %>, <%= scientist.state %> <%= scientist.zip_code %></div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Phone</strong>: <%= scientist.phone %></div>
+                  <% if scientist.evolution and scientist.climate_change %>
+                    <div class="col-sm-12"><strong>Can talk about</strong>: Evolution and Climate Change</div>
+                  <% elsif scientist.evolution %>
+                    <div class="col-sm-12"><strong>Can talk about</strong>: Evolution</div>
+                  <% elsif scientist.climate_change %>
+                    <div class="col-sm-12"><strong>Can talk about</strong>: Climate Change</div>
+                  <% end %>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= scientist.communication_method %></div>
+                  <div class="col-sm-12"><strong>Occupation</strong>: <%= scientist.occupation %></div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Education</strong>: <%= scientist.education %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Specialization</strong>: <%= scientist.specialization %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Classroom experience</strong>: <%= scientist.experience %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Hopes to gain</strong>: <%= scientist.goals %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Overall availability</strong>: <%= scientist.availability %></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
-                </div>
-                <div class="row match_button_location" id="match_scientist_<%=scientist.id %>"><button type="button" onclick="createMatch(<%=scientist.id%>)">Match</button>
+                <div class="expanded-info" style="display:none">
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Email</strong>: <%= scientist.email %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Phone</strong>: <%= scientist.phone %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Preferred Communication</strong>: <%= scientist.communication_method %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Education</strong>: <%= scientist.education %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Specialization</strong>: <%= scientist.specialization %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Classroom experience</strong>: <%= scientist.experience %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Hopes to gain</strong>: <%= scientist.goals %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Overall availability</strong>: <%= scientist.availability %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12"><strong>Link to talk</strong>: <a><%= scientist.link %></a></div>
+                  </div>
+                  <div class="row scientist_match_button"><button type="button" onclick="createMatch(<%=scientist.id%>)">Match</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="col-md-2"></div>
         </div>
-        <div class="col-md-2"></div>
-      </div>
+        <% else %>
+          <% scientists_tried += 1 %>
+          <% if (scientists_tried == Scientist.all.size) then %>
+            <h4> No Unmatched Scientists </h4>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -144,7 +162,7 @@ function expandTeacher(id){
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
     if (sort_by != "scientist") { //only do this stuff if going to sort by teacher
       //make sure no other teachers have their info expanded
-      $('.teacher .expanded-info').css('display', 'none')
+      $('.teacher .expanded-info .teacher_match_button').css('display', 'none')
       sort_by = "teacher";
       id_sorting_by = id;
       document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
@@ -170,6 +188,8 @@ function expandTeacher(id){
           alert(error);
         }
       });
+    } else {
+      $('.teacher_match_button').css('display', 'inline-block')
     }
     //expand the user that was clicked   
     $('#teacher_' + id + ' .expanded-info').css('display', 'inline-block')   
@@ -196,7 +216,7 @@ function expandScientist(id){
       sort_by = "scientist";
       id_sorting_by = id;
       //make sure no other scientists have their info expanded
-      $('.scientist .expanded-info').css('display', 'none')
+      $('.scientist .expanded-info .scientist_match_button').css('display', 'none')
       document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
       //make sure no teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
@@ -221,34 +241,8 @@ function expandScientist(id){
         }
       });
     } else {
-      // document.getElementById("match_scientist_" + id).innerHTML = '<button onclick="createMatch(' + id + ')"">Match</button>';
-      // document.getElementById("match")
-      // $.post('/matches/create_match', {
-      //   scientist_id: id,
-      //   teacher_id: id_sorting_by
-      // }); 
-      //   success: function(data,status,xhr){
-      //     console.log(data);
-      //     //set teacher to invisible if it's on the list of far away teachers
-      //     $.each(data.incompatible_teachers, function(index, value) {
-      //         $('#teacher_' + value).css('display', 'none');
-      //     });
-      //     //set teacher to visible if it's on the list of compatible teachers
-      //     $.each(data.compatible_teachers, function(index, value) {
-      //         $('#teacher_' + value).css('display', 'block');
-      //     });
-      //   },
-      //   error: function(xhr,status,error){
-      //     console.log(xhr);
-      //     alert(error);
-      //   }
-      // });
-
-      // console.log("id: " + id, "teacher_id: " + id_sorting_by);
-      // var list = document.getElementsByClassName("match_button_location");
-      // for (i = 0; i < list.length; i++) {
-      //   list[i].innerHTML = '<%= button_to("Match", action: "create_match", params: { scientist_id: ' + id + ', teacher_id:' + id_sorting_by +'}) %>';
-      // }
+      //make scientist match buttons visible if sorting by teacher
+      $('.scientist_match_button').css('display', 'inline-block')
     }
     //expand the scientist that was clicked
     $('#scientist_' + id + ' .expanded-info').css('display', 'inline-block')    
@@ -268,13 +262,23 @@ function expandScientist(id){
 }
 
 function createMatch(id) {
-  $.post('/matches/create_match', {
-    scientist_id: id,
-    teacher_id: id_sorting_by
-  }, function success(new_match) {
-    console.log("new_match: " + new_match.match_id);
-    window.location.replace('/matches/new/' + new_match.match_id);
-  }); 
+  if (sorting_by == "teacher") {
+    $.post('/matches/create_match', {
+      scientist_id: id,
+      teacher_id: id_sorting_by
+    }, function success(new_match) {
+      console.log("new_match: " + new_match.match_id);
+      window.location.replace('/matches/new/' + new_match.match_id);
+    }); 
+  } else {
+    $.post('/matches/create_match', {
+      scientist_id: id_sorting_by,
+      teacher_id: id
+    }, function success(new_match) {
+      console.log("new_match: " + new_match.match_id);
+      window.location.replace('/matches/new/' + new_match.match_id);
+    });
+  }
 }
 
 
