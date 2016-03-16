@@ -1,0 +1,7 @@
+<h1> Testing Matches </h1>
+
+<% for match in Match.all %>
+	<%= Teacher.find_by_id(match.teacher_id).name %>
+	<h4> has been matched with </h4>
+	<%= Scientist.find_by_id(match.scientist_id).name %>
+<% end %>
