@@ -93,7 +93,7 @@ class TeacherController < ApplicationController
     end 
     teacher.save
 
-    redirect_to '/teachers/new'
+    redirect_to '/teachers/thankyou'
 
   end
 

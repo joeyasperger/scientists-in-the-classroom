@@ -20,8 +20,13 @@ Rails.application.routes.draw do
   get 'scientists/test' => 'scientist#test'
 
   get 'matches/new' => 'match#new'
+
   get 'matches/get_matched_teachers/:id' => 'match#get_matched_teachers'
   get 'matches/get_matched_scientists/:id' => 'match#get_matched_scientists'
+
+  get 'teachers/thankyou' => 'teacher#thankyou'
+  get 'scientists/thankyou' => 'scientist#thankyou'
+  
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
