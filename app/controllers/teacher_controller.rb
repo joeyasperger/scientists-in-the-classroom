@@ -61,7 +61,7 @@ class TeacherController < ApplicationController
       teacher.communication_method = params[:communication_method]
     end
 
-    case params[:topics]
+    case params[:topics_wanted]
     when "climate_change"
       teacher.climate_change = true
       teacher.evolution = false

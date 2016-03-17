@@ -70,169 +70,173 @@
   }
 </script>
 <div class="container">
-  <h3>Scientist Application</h3>
-  <form action="/scientists" method="post" class="form-horizontal" role="form">
-    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-    <h4>*1. Contact Information</h4>
-    <div class="form-group">
-      <label class="control-label col-md-2">Name (First and Last):</label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" name="name">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-2">City/Town:</label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" name="city">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-2">State/Province:</label>
-      <div class="col-md-4">
-        <select class="form-control" name="state">
-          <% @states.each do |state| %>
-            <option value="<%= state %>"><%= state %></option>
-          <% end %>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-2">ZIP/Postal Code:</label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" name="zip_code">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-2">Email Address:</label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" name="email">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-2">Phone Number:</label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" name="phone">
-      </div>
-    </div>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <h3 class="text-center">Scientist Application</h3>
+      <form action="/scientists" method="post" class="form-horizontal" role="form">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <h4>*1. Contact Information</h4>
+        <div class="form-group">
+          <label class="control-label col-md-2">Name (First and Last):</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">City/Town:</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="city">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">State/Province:</label>
+          <div class="col-md-4">
+            <select class="form-control" name="state">
+              <% @states.each do |state| %>
+                <option value="<%= state %>"><%= state %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">ZIP/Postal Code:</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="zip_code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Email Address:</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Phone Number:</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="phone">
+          </div>
+        </div>
 
-    <h4>*2. You will be interacting with the teacher consistently throughout the semester. What is your preferred method of communication?</h4>
-    <div class="radio indent">
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="communication_method" value="phone">Phone</label><br/>
-        <label class="control-label"><input type="radio" name="communication_method" value="email">Email</label><br/>
-        <label class="control-label"><input type="radio" name="communication_method" value="other">Other (please specify)</label><br/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="indent col-md-4">
-        <input type="text" class="form-control" name="communication_method_other">
-      </div>
-    </div>
+        <h4>*2. You will be interacting with the teacher consistently throughout the semester. What is your preferred method of communication?</h4>
+        <div class="radio indent">
+          <div class="form-group">
+            <label class="control-label"><input type="radio" name="communication_method" value="phone">Phone</label><br/>
+            <label class="control-label"><input type="radio" name="communication_method" value="email">Email</label><br/>
+            <label class="control-label"><input type="radio" name="communication_method" value="other">Other (please specify)</label><br/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="indent col-md-4">
+            <input type="text" class="form-control" name="communication_method_other">
+          </div>
+        </div>
 
-    <h4>*3. What is your highest level of education?</h4>
-    <div class="radio indent">
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="education" value="Bachelor's Degree">Bachelor's Degree</label><br/>
-        <label class="control-label"><input type="radio" name="education" value="Graduate Degree">Graduate Degree</label><br/>
-        <label class="control-label"><input type="radio" name="education" value="PhD">PhD</label>
-      </div>
-    </div>
+        <h4>*3. What is your highest level of education?</h4>
+        <div class="radio indent">
+          <div class="form-group">
+            <label class="control-label"><input type="radio" name="education" value="Bachelor's Degree">Bachelor's Degree</label><br/>
+            <label class="control-label"><input type="radio" name="education" value="Graduate Degree">Graduate Degree</label><br/>
+            <label class="control-label"><input type="radio" name="education" value="PhD">PhD</label>
+          </div>
+        </div>
 
-    <h4>*4. What is your occupation?</h4>
-    <div class="radio indent">
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</label><br/>
-        <label class="control-label"><input type="radio" name="occupation" value="Post-doc"> Post-doc</label><br/>
-        <label class="control-label"><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</label><br/>
-        <label class="control-label"><input type="radio" name="occupation" value="other"> Other (please specify)</label><br/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="indent col-md-4">
-        <input type="text" class="form-control" name="occupation_other">
-      </div>
-    </div>
+        <h4>*4. What is your occupation?</h4>
+        <div class="radio indent">
+          <div class="form-group">
+            <label class="control-label"><input type="radio" name="occupation" value="Graduate Student"> Graduate Student</label><br/>
+            <label class="control-label"><input type="radio" name="occupation" value="Post-doc"> Post-doc</label><br/>
+            <label class="control-label"><input type="radio" name="occupation" value="Lecturer/Professor/Instructor"> Lecturer/Professor/Instructor</label><br/>
+            <label class="control-label"><input type="radio" name="occupation" value="other"> Other (please specify)</label><br/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="indent col-md-4">
+            <input type="text" class="form-control" name="occupation_other">
+          </div>
+        </div>
 
-    <h4>*5. What school or company are you affiliated with?</h4>
-    <div class="form-group">
-      <div class="indent col-md-4">
-        <input type="text" class="form-control" name="affiliation">
-      </div>
+        <h4>*5. What school or company are you affiliated with?</h4>
+        <div class="form-group">
+          <div class="indent col-md-4">
+            <input type="text" class="form-control" name="affiliation">
+          </div>
+        </div>
+
+        <h4>*6. Can you talk about evolution, climate change, or both?</h4>
+        <div class="radio indent">
+          <div class="form-group">
+            <label class="control-label"><input type="radio" name="topics" value="climate_change"> Climate Change</label><br/>
+            <label class="control-label"><input type="radio" name="topics" value="evolution"> Evolution</label><br/>
+            <label class="control-label"><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</label>
+          </div>
+        </div>
+
+        <h4>*7. What is your specialization? How does it relate to climate change or evolution?</h4>
+        <div class="form-group">
+          <div class="indent col-md-6">
+            <textarea class="form-control" rows="3" name="specialization"></textarea>
+          </div>
+        </div>
+
+        <h4>*8. What experience do you have working in a classroom setting?</h4>
+        <div class="form-group">
+          <div class="indent col-md-6">
+            <textarea class="form-control" rows="3" name="experience"></textarea>
+          </div>
+        </div>
+
+        <h4>*9. What do you hope to gain from participating in the Scientists in the Classroom program?</h4>
+        <div class="form-group">
+          <div class="indent col-md-6">
+            <textarea class="form-control" rows="3" name="goals"></textarea>
+          </div>
+        </div>
+
+        <h4>*10. What is your overall availability like?</h4>
+        <div class="form-group">
+          <div class="indent col-md-6">
+            <textarea class="form-control" rows="3" name="availability"></textarea>
+          </div>
+        </div>
+
+
+        <h4>*11. This program requires that you visit the class you are matched with twice during the semester, possibly for multiple periods during the day. Will you be able to commit the time to do this?</h4>
+        <div class="form-group">
+          <div class="indent checkbox">
+            <label><input type="checkbox" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</label>
+          </div>
+        </div>
+
+        <h4>*12. Sometimes the class you are matched with is not right in or near urban or University centers. Would you be willing to travel up to an hour to visit a classroom? (Keep in mind this would be only twice during the semester).</h4>
+        <div class="radio indent">
+          <div class="form-group">
+            <label class="control-label"><input type="radio" name="less_than_30" value="no"> Yes, that is not a problem.</label><br/>
+            <label class="control-label"><input type="radio" name="less_than_30" value="yes"> No, let's keep the class within 30 minutes of where I am.</label>
+          </div>
+        </div>
+
+        <h4>*13. If available, please include a link to a video of a talk you have given.</h4>
+        <div class="form-group">
+          <div class="indent col-md-4">
+            <input type="text" class="form-control" name="link">
+          </div>
+        </div>
+
+        <h4>*14. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h4>
+        <div class="form-group">
+          <div class="indent checkbox">
+            <label><input type="checkbox" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-5 control-label"></label>
+          <div class="col-md-2">
+            <button type="button" onclick="validateForm()" class="btn btn-primary btn-block center-block">Submit</button>
+          </div>  
+        </div>
+
+      </form>
     </div>
-
-    <h4>*6. Can you talk about evolution, climate change, or both?</h4>
-    <div class="radio indent">
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="topics" value="climate_change"> Climate Change</label><br/>
-        <label class="control-label"><input type="radio" name="topics" value="evolution"> Evolution</label><br/>
-        <label class="control-label"><input type="radio" name="topics" value="both"> Both Climate Change and Evolution</label>
-      </div>
-    </div>
-
-    <h4>*7. What is your specialization? How does it relate to climate change or evolution?</h4>
-    <div class="form-group">
-      <div class="indent col-md-6">
-        <textarea class="form-control" rows="3" name="specialization"></textarea>
-      </div>
-    </div>
-
-    <h4>*8. What experience do you have working in a classroom setting?</h4>
-    <div class="form-group">
-      <div class="indent col-md-6">
-        <textarea class="form-control" rows="3" name="experience"></textarea>
-      </div>
-    </div>
-
-    <h4>*9. What do you hope to gain from participating in the Scientists in the Classroom program?</h4>
-    <div class="form-group">
-      <div class="indent col-md-6">
-        <textarea class="form-control" rows="3" name="goals"></textarea>
-      </div>
-    </div>
-
-    <h4>*10. What is your overall availability like?</h4>
-    <div class="form-group">
-      <div class="indent col-md-6">
-        <textarea class="form-control" rows="3" name="availability"></textarea>
-      </div>
-    </div>
-
-
-    <h4>*11. This program requires that you visit the class you are matched with twice during the semester, possibly for multiple periods during the day. Will you be able to commit the time to do this?</h4>
-    <div class="form-group">
-      <div class="indent checkbox">
-        <label><input type="checkbox" name="committed"> Yes, I can definitely commit to visiting my paired class two times throughout the semester!</label>
-      </div>
-    </div>
-
-    <h4>*12. Sometimes the class you are matched with is not right in or near urban or University centers. Would you be willing to travel up to an hour to visit a classroom? (Keep in mind this would be only twice during the semester).</h4>
-    <div class="radio indent">
-      <div class="form-group">
-        <label class="control-label"><input type="radio" name="less_than_30" value="no"> Yes, that is not a problem.</label><br/>
-        <label class="control-label"><input type="radio" name="less_than_30" value="yes"> No, let's keep the class within 30 minutes of where I am.</label>
-      </div>
-    </div>
-
-    <h4>*13. If available, please include a link to a video of a talk you have given.</h4>
-    <div class="form-group">
-      <div class="indent col-md-4">
-        <input type="text" class="form-control" name="link">
-      </div>
-    </div>
-
-    <h4>*14. Please read the <a href="http://ncseteach.com/index.php/scientist-in-the-classroom/next-steps/">expectations</a> for Scientists in the Classroom.</h4>
-    <div class="form-group">
-      <div class="indent checkbox">
-        <label><input type="checkbox" name="read_expectations"> Yes, I have read the expectations and am committing to visiting my matched class twice!</label>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-5 control-label"></label>
-      <div class="col-md-2">
-        <button type="button" onclick="validateForm()" class="btn btn-primary btn-block center-block">Submit</button>
-      </div>  
-    </div>
-
-  </form>
+  </div>
 </div>

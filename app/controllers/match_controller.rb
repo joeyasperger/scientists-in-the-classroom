@@ -11,24 +11,13 @@ class MatchController < ApplicationController
     def index
         @page = 'matches'    
         if params[:name] or params[:institution] or params[:city] or params[:state]
-            #lol this is ugly -- fix it
-            teachers = Teacher.where("lower(name) like lower(?) and lower(school) like lower(?) \
-                and lower(city) like lower(?) and lower(state) like lower(?)", "%#{params[:name]}%",
-                "%#{params[:institution]}%", "%#{params[:city]}%", "%#{params[:state]}%") 
-            scientists = Scientist.where("lower(name) like lower(?) and lower(affiliation) like lower(?) \
-                and lower(city) like lower(?) and lower(state) like lower(?)", "%#{params[:name]}%",
-                "%#{params[:institution]}%", "%#{params[:city]}%", "%#{params[:state]}%") 
-            @matches = []
-            teachers.each do |teacher|
-                if teacher.matches[0] and not @matches.include?(teacher.matches[0])
-                    @matches.append(teacher.matches[0])
-                end
-            end
-            scientists.each do |scientist|
-                if scientist.matches[0] and not @matches.include?(scientist.matches[0])
-                    @matches.append(scientist.matches[0])
-                end
-            end
+            @matches = Match.joins(:scientist).joins(:teacher).where("(lower(teachers.name) like lower(?) \
+                and lower(teachers.school) like lower(?) and lower(teachers.city) like lower(?) \
+                and lower(teachers.state) like lower(?)) OR (lower(scientists.name) like lower(?) \
+                and lower(scientists.affiliation) like lower(?) and lower(scientists.city) like lower(?) \
+                and lower(scientists.state) like lower(?))",
+                "%#{params[:name]}%", "%#{params[:institution]}%", "%#{params[:city]}%", "%#{params[:state]}%",
+                "%#{params[:name]}%", "%#{params[:institution]}%", "%#{params[:city]}%", "%#{params[:state]}%")
             @filtered = true
             @params = {
                 name:params[:name],
@@ -94,6 +83,7 @@ class MatchController < ApplicationController
     	end
     	for teacher in Teacher.within(distance, :origin => 
     							[curr_scientist.lat, curr_scientist.lng]).all do
+            puts teacher
             if ((curr_scientist.climate_change == true && teacher.climate_change == true) || 
                 (curr_scientist.evolution == true && teacher.evolution == true)) then
                 compatible_teachers << teacher.id
@@ -106,6 +96,7 @@ class MatchController < ApplicationController
         end
         data = {:incompatible_teachers => incompatible_teachers,
                 :compatible_teachers => compatible_teachers}
+        puts data
         render :json => data, :status => :ok
     end
 
@@ -119,14 +110,9 @@ class MatchController < ApplicationController
             match = Match.new
             match.teacher_id = @teacher.id
             match.scientist_id = @scientist.id
-            @scientist.teachers << @teacher
-            @teacher.scientists << @scientist
-            @scientist.save
-            @teacher.save
             match.save
             new_match = {match_id: match.id}
             render :json => new_match, :status => :ok
-        else
         end
         #@new_match = Match.new
         #@new_match.teacher_id = params[:teacher_id]

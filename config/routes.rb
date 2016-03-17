@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   get 'match' => 'match#new'
   get 'matches' => 'match#index'
 
-  get 'teachers/new' => 'teacher#new'
+  get 'teachers' => 'teacher#new'
   post 'teachers' => 'teacher#create'
 
-  get 'scientists/new' => 'scientist#new'
+  get 'scientists' => 'scientist#new'
   post 'scientists' => 'scientist#create'
 
   get 'teachers/test' => 'teacher#test'

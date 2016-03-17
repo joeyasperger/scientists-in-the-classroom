@@ -1,11 +1,16 @@
-<center><h2 id="sorting_by">click a teacher or scientist to start sorting by that type</h2></center>
-<% if (params[:id] != nil) %>
-  <% match = Match.find_by_id(params[:id]) %>
-  <% matched_scientist = Scientist.find_by_id(match.scientist_id) %>
-  <% matched_teacher = Teacher.find_by_id(match.teacher_id) %>
-  <center><h2>You just matched <%= matched_scientist.name %> with <%= matched_teacher.name %></h2></center>
-<% end %>
+
 <div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div id="sorting_by" class="alert alert-info text-center" role="alert">Click a teacher or scientist to filter its matches</div>
+      <% if (params[:id] != nil) %>
+        <% match = Match.find_by_id(params[:id]) %>
+        <% matched_scientist = Scientist.find_by_id(match.scientist_id) %>
+        <% matched_teacher = Teacher.find_by_id(match.teacher_id) %>
+        <center><h2>You just matched <%= matched_scientist.name %> with <%= matched_teacher.name %></h2></center>
+      <% end %>
+      </div>
+  </div>
   <div class="row">
     <div class="col-xs-1"></div>
     <div class="col-xs-5 text-center"><h3>Teachers</h3></div>
@@ -22,7 +27,7 @@
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-10">
-            <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandTeacher(<%= teacher.id %>)" style="cursor:pointer">
+            <div class="panel panel-info teacher" id="teacher_<%= teacher.id %>" onclick="expandTeacher(<%= teacher.id %>, '<%= teacher.name %>')" style="cursor:pointer">
               <div class="panel-heading">
                 <h3 class="panel-title"><%= teacher.name %> - <%= teacher.school %></h3>
               </div>
@@ -87,7 +92,7 @@
       <% if (scientist.teachers.size == 0) then %>
         <div class="row">
           <div class="col-md-10">
-            <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandScientist(<%= scientist.id %>)" style="cursor:pointer">
+            <div class="panel panel-info scientist" id="scientist_<%= scientist.id %>" onclick="expandScientist(<%= scientist.id %>, '<%= scientist.name %>')" style="cursor:pointer">
               <div class="panel-heading">
                 <h3 class="panel-title"><%= scientist.name %> - <%= scientist.affiliation %></h3>
               </div>
@@ -157,15 +162,16 @@
 
 var sort_by = "none";
 var id_sorting_by = -1;
-function expandTeacher(id){
+function expandTeacher(id, name){
   //if info isn't expanded, expand it, filter scientist list, and prevent user from being able to filter by scientist
   if ($('#teacher_' + id + ' .expanded-info').css('display') == 'none'){
     if (sort_by != "scientist") { //only do this stuff if going to sort by teacher
       //make sure no other teachers have their info expanded
       $('.teacher .expanded-info .teacher_match_button').css('display', 'none')
+      $('.teacher .expanded-info').css('display', 'none')
       sort_by = "teacher";
       id_sorting_by = id;
-      document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
+      //document.getElementById("sorting_by").innerHTML = "Sorting by Teacher";
       //make sure no scientists have their info expanded
       $('.scientist .expanded-info').css('display', 'none')   
       //get list of ids of scientists within range
@@ -182,6 +188,7 @@ function expandTeacher(id){
           $.each(data.compatible_scientists, function(index, value) {
               $('#scientist_' + value).css('display', 'block');
           });
+          $('#sorting_by').html('Filtering matches for ' + name)
         },
         error: function(xhr,status,error){
           console.log(xhr);
@@ -198,7 +205,7 @@ function expandTeacher(id){
     $('#teacher_' + id + ' .expanded-info').css('display', 'none')
     if (sort_by != "scientist") {
       sort_by = "none";
-      document.getElementById("sorting_by").innerHTML = "click a teacher or scientist to start sorting by that type";
+      document.getElementById("sorting_by").innerHTML = "Click a teacher or scientist to start sorting by that type";
       //make all the scientists who have been hidden reappear
       $('.panel.panel-info.scientist').css('display', 'block')
       //make all the teachers who have been hidden reappear
@@ -210,14 +217,15 @@ function expandTeacher(id){
 }
 
 
-function expandScientist(id){
+function expandScientist(id, name){
   if ($('#scientist_' + id + ' .expanded-info').css('display') == 'none'){ 
     if (sort_by != "teacher") { //only do this stuff if wanna filter by scientist
       sort_by = "scientist";
       id_sorting_by = id;
       //make sure no other scientists have their info expanded
       $('.scientist .expanded-info .scientist_match_button').css('display', 'none')
-      document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
+      $('.scientist .expanded-info').css('display', 'none')
+      //document.getElementById("sorting_by").innerHTML = "Sorting by Scientist";
       //make sure no teachers have their info expanded
       $('.teacher .expanded-info').css('display', 'none')
       //get list of ids of compatible teachers
@@ -234,6 +242,7 @@ function expandScientist(id){
           $.each(data.compatible_teachers, function(index, value) {
               $('#teacher_' + value).css('display', 'block');
           });
+          $('#sorting_by').html('Filtering matches for ' + name)
         },
         error: function(xhr,status,error){
           console.log(xhr);
@@ -250,7 +259,7 @@ function expandScientist(id){
     $('#scientist_' + id + ' .expanded-info').css('display', 'none')
     if (sort_by != "teacher") {
       sort_by = "none";
-      document.getElementById("sorting_by").innerHTML = "click a teacher or scientist to start sorting by that type";
+      document.getElementById("sorting_by").innerHTML = "Click a teacher or scientist to start sorting by that type";
       //make all the teachers who have been hidden reappear
       $('.panel.panel-info.teacher').css('display', 'block')
       //make all the scientists who have been hidden reappear
