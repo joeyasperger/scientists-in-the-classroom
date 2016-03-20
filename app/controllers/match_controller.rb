@@ -102,10 +102,13 @@ class MatchController < ApplicationController
 
     def create_match 
         @teacher = Teacher.find_by_id(params[:teacher_id])
-        # if (@teacher == nil) then
-        #     raise params.inspect
-        # end
+        if (@teacher == nil) then
+            raise params.inspect
+        end
         @scientist = Scientist.find_by_id(params[:scientist_id])
+        if @scientist == nil then
+            raise params.inspect
+        end
         if (@teacher != nil && @scientist != nil) then
             match = Match.new
             match.teacher_id = @teacher.id
