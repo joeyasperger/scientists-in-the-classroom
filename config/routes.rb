@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :admins
+  get '/admins/sign_up' => redirect('matches/new')
+  post 'admins' => redirect('matches/new')
   root to: "match#new"
 
   get 'admins' => 'admin#index'
